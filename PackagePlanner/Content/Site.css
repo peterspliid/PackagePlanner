@@ -22,3 +22,35 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* --------- CUSTOM CSS ---------- */
+
+.title {
+}
+
+.main-logo {
+    float: right
+}
+
+.destination-selector {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.destination-selector__label {
+    display: block;
+}
+
+.results-list {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid gray;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-top: 15px;
+}
+
+.go-button {
+    text-align: center;
+}

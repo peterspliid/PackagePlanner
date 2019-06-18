@@ -2,11 +2,66 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="row">
-    <div class="col-md-4">
+<h2 class="title">PACKAGE PLANNER</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="destination-selector">
+                <label class="destination-selector__label">From</label>
+                <select class="form-control">
+                    <option>Tripoli</option>
+                    <option>Sahara</option>
+                    <option>Wadai</option>
+                    <option>Kabalo</option>
+                </select>
+            </div>
+
+            <div class="destination-selector">
+                <label class="destination-selector__label">To</label>
+                <select class="form-control">
+                    <option>Tripoli</option>
+                    <option>Sahara</option>
+                    <option>Wadai</option>
+                    <option>Kabalo</option>
+                </select>
+            </div>
+            <div class="destination-selector">
+                <label class="destination-selector__label">Weight</label>
+                <select class="form-control">
+                    <option>< 1kg</option>
+                    <option>1 - 5 kg</option>
+                    <option>5 - 20kg</option>
+                </select>
+            </div>
+            <div class="destination-selector">
+                <label class="destination-selector__label">Customer ID</label>
+                <input type="text" class="form-control"/>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="main-logo">
+                <img src="./Img/PackagePlannerLogo-desktop.png"/>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
+</div>
+
+<div class="row go-button">
+    <button id="go-button" class="btn btn-light">Check</button>
+</div>
+
+<div id="results-list" class="form-control results-list">
+    <div class="results__row">
+        <label class="destination-selector__label">Best</label>
+        <button class="results__select">Select</button>
     </div>
-    <div class="col-md-4">
+    <div class="results__row">
+        <label class="destination-selector__label">Fastest</label>
+        <button class="results__select">Select</button>
+    </div>
+    <div class="results__row">
+        <label class="destination-selector__label">Cheapest</label>
+        <button class="results__select">Select</button>
     </div>
 </div>
