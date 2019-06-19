@@ -57,53 +57,57 @@
     <img class="spinner-icon" src="./Img/spinner.png"/>
 </div>
 
+<div id="error-view" class="error">
+    <p class="error-message"></p>
+</div>
+
 <div id="results-list" class="form-control results-list">
     <div class="results__row">
         <h2 class="destination-selector__label">Best</h2>
         <div class="result-info">
             <div class="result-info__section">
                 <span class="result-metric">Time:</span>
-                <span class="result-amount">8</span>
+                <span id="best-time" class="result-amount"></span>
                 <span class="result-unit">hours</span>
             </div>
             <div class="result-info__section">
                 <span class="result-metric">Price:</span>
-                <span class="result-amount">15</span>
+                <span id="best-price" class="result-amount"></span>
                 <span class="result-unit">dollars</span>
             </div>
         </div>
-        <button class="results__select btn btn-light">Select</button>
+        <button id="select-best-button" class="results__select btn btn-light">Select</button>
     </div>
     <div class="results__row">
         <h2 class="destination-selector__label">Fastest</h2>
         <div class="result-info">
             <div class="result-info__section">
                 <span class="result-metric">Time:</span>
-                <span class="result-amount">8</span>
+                <span id="fastest-time" class="result-amount"></span>
                 <span class="result-unit">hours</span>
             </div>
             <div class="result-info__section">
                 <span class="result-metric">Price:</span>
-                <span class="result-amount">15</span>
+                <span id="fastest-price" class="result-amount"></span>
                 <span class="result-unit">dollars</span>
             </div>
         </div>
-        <button class="results__select btn btn-light">Select</button>
+        <button id="select-fastest-button" class="results__select btn btn-light">Select</button>
     </div>
     <div class="results__row">
         <h2 class="destination-selector__label">Cheapest</h2>
         <div class="result-info">
             <div class="result-info__section">
                 <span class="result-metric">Time:</span>
-                <span class="result-amount">24</span>
+                <span id="cheapest-time" class="result-amount"></span>
                 <span class="result-unit">hours</span>
             </div>
             <div class="result-info__section">
                 <span class="result-metric">Price:</span>
-                <span class="result-amount">12</span>
+                <span id="cheapest-price" class="result-amount"></span>
                 <span class="result-unit">dollars</span>
             </div>
         </div>
-        <button class="results__select btn btn-light">Select</button>
+        <button id="select-cheapest-button" class="results__select btn btn-light">Select</button>
     </div>
 </div>

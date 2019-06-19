@@ -94,6 +94,10 @@ textarea {
     height: 25px;
 }
 
+.error {
+    color: red;
+}
+
 /* Mobile design */
 
 @media (max-width: 800px) {
