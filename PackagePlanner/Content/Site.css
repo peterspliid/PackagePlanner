@@ -43,6 +43,11 @@ textarea {
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 0;
+}
+
+.main-form {
+
 }
 
 .destination-selector {
@@ -57,12 +62,12 @@ textarea {
 .results-list {
     width: 100%;
     min-height: 200px;
-    border: 1px solid #eee;
     margin-left: -15px;
     margin-right: -15px;
     margin-top: 15px;
     display: flex;
     justify-content: space-around;
+    box-shadow: none;
 }
 
 .result-info {
@@ -89,8 +94,24 @@ textarea {
     height: 25px;
 }
 
-@media (max-width: 750px) {
+/* Mobile design */
+
+@media (max-width: 800px) {
     .results-list {
         flex-direction: column;
+        border: none;
+        margin-top: 75px;
+    }
+
+    .main-logo {
+        display: none;
+    }
+
+    select, input {
+        max-width: 100%;
+    }
+
+    .destination-selector__label {
+        width: 100%;
     }
 }
