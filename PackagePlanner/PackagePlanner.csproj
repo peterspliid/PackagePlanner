@@ -149,6 +149,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Img\PackagePlannerLogo-desktop.png" />
+    <Content Include="Img\spinner.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\wa-oadk - FTP.pubxml" />

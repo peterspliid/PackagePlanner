@@ -26,11 +26,23 @@ textarea {
 
 /* --------- CUSTOM CSS ---------- */
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
 .title {
 }
 
 .main-logo {
-    float: right
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .destination-selector {
@@ -45,12 +57,40 @@ textarea {
 .results-list {
     width: 100%;
     min-height: 200px;
-    border: 1px solid gray;
+    border: 1px solid #eee;
     margin-left: -15px;
     margin-right: -15px;
     margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.result-info {
+    margin: 10px;
+}
+
+.result-metric {
+    font-weight: bold;
 }
 
 .go-button {
     text-align: center;
+}
+
+.spinner {
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+}
+
+.spinner-icon {
+    animation: spin 1s steps(12, end) infinite;
+    width: 25px;
+    height: 25px;
+}
+
+@media (max-width: 750px) {
+    .results-list {
+        flex-direction: column;
+    }
 }

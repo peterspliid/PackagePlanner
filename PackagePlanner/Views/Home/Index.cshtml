@@ -2,7 +2,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2 class="title">PACKAGE PLANNER</h2>
+<h1 class="title">PACKAGE PLANNER</h1>
 
 <div class="container">
     <div class="row">
@@ -51,17 +51,57 @@
     <button id="go-button" class="btn btn-light">Check</button>
 </div>
 
+<div class="spinner" id="spinner">
+    <img class="spinner-icon" src="./Img/spinner.png"/>
+</div>
+
 <div id="results-list" class="form-control results-list">
     <div class="results__row">
-        <label class="destination-selector__label">Best</label>
-        <button class="results__select">Select</button>
+        <h2 class="destination-selector__label">Best</h2>
+        <div class="result-info">
+            <div class="result-info__section">
+                <span class="result-metric">Time:</span>
+                <span class="result-amount">10</span>
+                <span class="result-unit">hours</span>
+            </div>
+            <div class="result-info__section">
+                <span class="result-metric">Price:</span>
+                <span class="result-amount">99</span>
+                <span class="result-unit">dollars</span>
+            </div>
+        </div>
+        <button class="results__select btn btn-light">Select</button>
     </div>
     <div class="results__row">
-        <label class="destination-selector__label">Fastest</label>
-        <button class="results__select">Select</button>
+        <h2 class="destination-selector__label">Fastest</h2>
+        <div class="result-info">
+            <div class="result-info__section">
+                <span class="result-metric">Time:</span>
+                <span class="result-amount">10</span>
+                <span class="result-unit">hours</span>
+            </div>
+            <div class="result-info__section">
+                <span class="result-metric">Price:</span>
+                <span class="result-amount">99</span>
+                <span class="result-unit">dollars</span>
+            </div>
+        </div>
+        <button class="results__select btn btn-light">Select</button>
     </div>
     <div class="results__row">
-        <label class="destination-selector__label">Cheapest</label>
-        <button class="results__select">Select</button>
+        <h2 class="destination-selector__label">Cheapest</h2>
+        <div class="result-info">
+            <div class="result-info__section">
+                <span class="result-metric">Time:</span>
+                <span class="result-amount">10</span>
+                <span class="result-unit">hours</span>
+            </div>
+            <div class="result-info__section">
+                <span class="result-metric">Price:</span>
+                <span class="result-amount">99</span>
+                <span class="result-unit">dollars</span>
+            </div>
+        </div>
+        <button class="results__select btn btn-light">Select</button>
     </div>
 </div>
