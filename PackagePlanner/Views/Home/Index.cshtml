@@ -1,8 +1,4 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
-<h1 class="title">PACKAGE PLANNER</h1>
+﻿<h1 class="title">@ViewBag.Title</h1>
 
 <div class="container">
     <div class="row">
@@ -10,22 +6,20 @@
             <div class="destination-selector">
                 <label class="destination-selector__label">From</label>
                 <select id="from-field" class="form-control">
-                    <option>Tripoli</option>
-                    <option>Sahara</option>
-                    <option>Wadai</option>
-                    <option>Kabalo</option>
-                    <option>Darfur</option>
+                    @foreach (var item in ViewBag.Cities)
+                    {
+                        <option>@item</option>
+                    }
                 </select>
             </div>
 
             <div class="destination-selector">
                 <label class="destination-selector__label">To</label>
                 <select id="to-field" class="form-control">
-                    <option>Tripoli</option>
-                    <option>Sahara</option>
-                    <option>Wadai</option>
-                    <option>Kabalo</option>
-                    <option>Darfur</option>
+                    @foreach (var item in ViewBag.Cities)
+                    {
+                        <option>@item</option>
+                    }
                 </select>
             </div>
             <div class="destination-selector">
@@ -34,16 +28,22 @@
                     <option>< 1kg</option>
                     <option>1 - 5 kg</option>
                     <option>5 - 20kg</option>
+
+                    @*@foreach (var item in ViewBag.WeightCategories)
+                    {
+                        <option value="@item">@item</option>
+                    }*@
+
                 </select>
             </div>
             <div class="destination-selector">
                 <label class="destination-selector__label">Customer ID</label>
-                <input id="customerId-input" type="text" class="form-control"/>
+                <input id="customerId-input" type="text" class="form-control" />
             </div>
         </div>
         <div class="col-sm">
             <div class="main-logo">
-                <img src="./Img/PackagePlannerLogo-desktop.png"/>
+                <img src="./Img/PackagePlannerLogo-desktop.png" />
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="spinner" id="spinner">
-    <img class="spinner-icon" src="./Img/spinner.png"/>
+    <img class="spinner-icon" src="./Img/spinner.png" />
 </div>
 
 <div id="error-view" class="error">

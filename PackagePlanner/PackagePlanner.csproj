@@ -140,6 +140,9 @@
     </Compile>
     <Compile Include="Models\DeliveryApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\Database.cs" />
+    <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />
+    <Compile Include="Utilities\APIHandling.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
