@@ -153,17 +153,6 @@ namespace PackagePlanner.Utilities
 
             return returnValues;
         }
-        public List<string> GetCargoTypes()
-        {
-            var queryString = @"SELECT name FROM [dbo].[CargoType]";
-            return ExecuteQuery<string>(queryString);
-        }
-
-        public List<string> GetCustomers()
-        {
-            var queryString = @"SELECT id FROM [dbo].[Customer]";
-            return ExecuteQuery<string>(queryString);
-        }
 
         public List<T> ExecuteQuery<T>(string queryString)
         {

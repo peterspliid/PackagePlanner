@@ -22,6 +22,8 @@ namespace PackagePlanner.Controllers
             };
             Utilities.WeightCalculator wc = new Utilities.WeightCalculator(apiRequestParams);
             Utilities.ShortestPathCalculator.ShortestPathFlight(wc, apiRequestParams.fromDestination, apiRequestParams.toDestination);
+
+
             var deliveryData = new DeliveryData()
             {
                 price = apiRequestParams.packageWidth,

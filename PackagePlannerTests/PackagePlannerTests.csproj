@@ -80,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AlgorithmDijkstraAirOnlyTests.cs" />
     <Compile Include="Utilities\DijkstraTests.cs" />
+    <Compile Include="Utilities\PriceTimeCalcTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

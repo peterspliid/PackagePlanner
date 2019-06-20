@@ -166,6 +166,7 @@
     <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />
     <Compile Include="Utilities\APIHandling.cs" />
     <Compile Include="Utilities\Dijkstra.cs" />
+    <Compile Include="Utilities\PriceTimeCalc.cs" />
     <Compile Include="Utilities\ShortestPathCalculator.cs" />
     <Compile Include="Utilities\WeightCalculator.cs" />
   </ItemGroup>
