@@ -19,22 +19,37 @@ namespace PackagePlanner.Utilities
         private List<Models.Connection> flightConnections;
         private Dictionary<string, Models.ConnectionData> connectionsData;
         private static Dictionary<string, Weight> cachedWeights = new Dictionary<string, Weight>();
-        public WeightCalculator(Models.ApiRequestParams p, Dictionary<string, Models.ConnectionData> cd)
+        public WeightCalculator(Models.ApiRequestParams p)
         {
             parameters = p;
-            connectionsData = cd;
+            connections = Database.Instance.GetConnections();
+            flightConnections = connections.Where(cn => cn.ConnectionType == "oa").ToList();
+            connectionsData = new Dictionary<string, Models.ConnectionData>();
+            foreach (Models.Connection con in connections)
+            {
+                if (con.ConnectionType == "oa")
+                {
+                    Models.ConnectionData conData = new Models.ConnectionData
+                    {
+                        Weight = 1,
+                        Type = "oa"
+                    };
+                    connectionsData[($"{con.Place1}-{con.Place2}")] = conData;
+                    connectionsData[($"{con.Place2}-{con.Place1}")] = conData;
+                }
+            }
         }
-        public Weight calc()
+        public Weight calc(string from, string to)
         {
-            string cacheString = $"{parameters.fromDestination}-{parameters.toDestination}-{parameters.cargoType}-{parameters.packageWeight}-{parameters.packageLength}-{parameters.packageWidth}-{parameters.packageHeight}-{parameters.recorded}";
+            string cacheString = $"{from}-{to}-{parameters.cargoType}-{parameters.packageWeight}-{parameters.packageLength}-{parameters.packageWidth}-{parameters.packageHeight}-{parameters.recorded}";
             if (cachedWeights.ContainsKey(cacheString))
             {
                 return cachedWeights[cacheString];
             }
             Weight weight = new Weight
             {
-                price = 1,
-                time = 1,
+                price = connectionsData.ContainsKey($"{from}-{to}") ? 1 : 0,
+                time = connectionsData.ContainsKey($"{from}-{to}") ? 1 : 0,
                 carrier = "oa"
             };
             cachedWeights[cacheString] = weight;

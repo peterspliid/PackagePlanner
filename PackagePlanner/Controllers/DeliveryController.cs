@@ -7,34 +7,30 @@ namespace PackagePlanner.Controllers
 {
     public class DeliveryController : ApiController
     {
-        public Delivery Get()
+        public DeliveryData Get(string fromDestination, string toDestination, int packageWeight, string cargoType, string recorded, int packageLength, int packageWidth, int packageHeight)
         {
-            var delivery = new Delivery()
+            ApiRequestParams apiRequestParams = new ApiRequestParams()
             {
-                best = new DeliveryData()
-                {
-                    price = 100,
-                    time = 2,
-                    success = true,
-                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere"}
-                },
-                cheapest = new DeliveryData()
-                {
-                    price = 15,
-                    time = 4,
-                    success = true,
-                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere" }
-                },
-                fastest = new DeliveryData()
-                {
-                    price = 100,
-                    time = 2,
-                    success = true,
-                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere" }
-                }
+                fromDestination = fromDestination,
+                toDestination = toDestination,
+                packageWeight = packageWeight,
+                cargoType = cargoType,
+                recorded = recorded,
+                packageHeight = packageHeight,
+                packageLength = packageLength,
+                packageWidth = packageWidth
+            };
+            Utilities.WeightCalculator wc = new Utilities.WeightCalculator(apiRequestParams);
+            Utilities.ShortestPathCalculator.ShortestPathFlight(wc, apiRequestParams.fromDestination, apiRequestParams.toDestination);
+            var deliveryData = new DeliveryData()
+            {
+                price = apiRequestParams.packageWidth,
+                route = new List<string>(),
+                success = true,
+                time = 8
             };
 
-            return delivery;
+            return deliveryData;
         }
     }
 }

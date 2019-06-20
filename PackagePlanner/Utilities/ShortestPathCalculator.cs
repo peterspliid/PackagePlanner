@@ -9,13 +9,13 @@ namespace PackagePlanner.Utilities
     {
         public static List<Models.Connection> connections;
         public static List<Models.Connection> flightConnections;
-        public static List<string> cities;
+        public static List<Models.City> cities;
         public static Dictionary<string, Models.ConnectionData> oaConnectionsData;
         static ShortestPathCalculator()
         {
             //connections = Database.Instance.GetConnections();
             //flightConnections = connections.Where(cn => cn.ConnectionType == "oa").ToList();
-            //cities = Database.Instance.GetCities();
+            cities = Database.Instance.GetCity();
             //oaConnectionsData = new Dictionary<string, Models.ConnectionData>();
 
             //foreach(Models.Connection con in connections)
@@ -34,10 +34,10 @@ namespace PackagePlanner.Utilities
 
 
         }
-        public static void ShortestPathFlight(Models.ApiRequestParams apiRequestParams)
+        public static List<string> ShortestPathFlight(Utilities.WeightCalculator weightCalculator, string from, string to)
         {
-            Dictionary<string, Models.ConnectionData> connectionsData = new Dictionary<string, Models.ConnectionData>();
-            
+            List<string> path = Dijkstra.DijkstraAlgorithm(weightCalculator, cities, from, to);
+            return path;
         }
     }
 }

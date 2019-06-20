@@ -43,11 +43,6 @@ namespace PackagePlanner.Utilities
             return connection;
         }
 
-        public List<string> GetCities()
-        {
-            var queryString = @"SELECT name FROM [dbo].[City]";
-            return ExecuteQuery<string>(queryString);
-        }
 
         public void SetCity(Models.City city)
         {
@@ -89,6 +84,7 @@ namespace PackagePlanner.Utilities
 
         public List<Models.Config> GetConfigs()
         {
+
             string queryString = @"SELECT Name, Value FROM [dbo].[Config]";
             return ExecuteQueryToObject<Models.Config>(queryString);
         }

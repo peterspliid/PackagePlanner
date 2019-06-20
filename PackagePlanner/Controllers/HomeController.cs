@@ -9,11 +9,9 @@ namespace PackagePlanner.Controllers
 
         public ActionResult Index()
         {
-            Models.ApiRequestParams par = new Models.ApiRequestParams();
-            par.SetApiRequestParamsToDefault();
-            ShortestPathCalculator.ShortestPathFlight(par);
+
             ViewBag.Title = "Package Planner!";
-            ViewBag.Cities = Database.Instance.GetCities();
+            ViewBag.Cities = Database.Instance.GetCity();
 
             var weigthClasses = Database.Instance.GetWeightCatagories();
             ViewBag.WeightCategories = weigthClasses;
