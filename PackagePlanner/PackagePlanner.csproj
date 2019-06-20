@@ -153,6 +153,7 @@
     <Compile Include="Models\ApiRequestParams.cs" />
     <Compile Include="Models\DeliveryData.cs" />
     <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\PriceCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Database.cs" />
     <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />
