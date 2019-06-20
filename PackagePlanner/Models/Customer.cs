@@ -2,14 +2,14 @@
 
 namespace PackagePlanner.Models
 {
-    public class City
+    public class Customer
     {
-        public string Id { get; set; }
+        public string id { get; set; }
         public string Name { get; set; }
 
-        public City(DataRow row)
+        public Customer(DataRow row)
         {
-            Id = (string)row[0];
+            id = (string)row[0];
             Name = (string)row[1];
         }
     }

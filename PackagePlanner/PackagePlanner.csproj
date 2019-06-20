@@ -146,10 +146,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlannedPackage.cs" />
+    <Compile Include="Models\CargoSizeCategory.cs" />
+    <Compile Include="Models\CargoType.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\ApiRequestParams.cs" />
+    <Compile Include="Models\ConnectionData.cs" />
     <Compile Include="Models\DeliveryData.cs" />
     <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\PriceCategory.cs" />
+    <Compile Include="Models\WeightCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\ErpIntegration.cs" />
     <Compile Include="Utilities\Database.cs" />
@@ -157,6 +166,7 @@
     <Compile Include="Utilities\APIHandling.cs" />
     <Compile Include="Utilities\Dijkstra.cs" />
     <Compile Include="Utilities\ShortestPathCalculator.cs" />
+    <Compile Include="Utilities\WeightCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\ERPCustomer\configuration91.svcinfo" />
@@ -250,6 +260,9 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -270,6 +283,9 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <servers defaultServer="SelfHostServer">
+            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:51639/" workingDir="" />
+          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
