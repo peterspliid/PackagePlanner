@@ -9,7 +9,7 @@ using PackagePlanner.Models;
 
 namespace PackagePlanner.Controllers
 {
-    public class APIController : ApiController
+    public class DeliveryController : ApiController
     {
         public DeliveryApi Get()
         {
