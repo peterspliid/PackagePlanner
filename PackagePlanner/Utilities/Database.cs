@@ -106,7 +106,7 @@ namespace PackagePlanner.Utilities
             return ExecuteQueryToObject<Models.Customer>(queryString);
         }
 
-        public void SetPlannedPackage(Models.City PlannedPackage)
+        public void SetPlannedPackage(Models.PlannedPackage plannedPackage)
         {
             var queryString = @"INSERT into [dbo].[PlannedPackage]" +
                 "(Id, " +
@@ -118,23 +118,51 @@ namespace PackagePlanner.Utilities
                 "FromCityId, " +
                 "ToCityId, " +
                 "PriceCategoryId, " +
-                "PriceCategory(Id)," +
-                " PackageHight, " +
+                "PackageHight, " +
                 "PackageWidth, " +
                 "PackageLength)" +
-
-                "VALUES(@Id, @Name)";
+                "VALUES(@Id, " +
+                "CustomerId, " +
+                "CargoTypeId, " +
+                "Price, " +
+                "DeliveryTime, " +
+                "Discount, " +
+                "FromCityId, " +
+                "ToCityId, " +
+                "PriceCategoryId, " +
+                "PackageHight, " +
+                "PackageWidth, " +
+                "PackageLength)";
 
             SqlCommand cmd = new SqlCommand(queryString, _connection);
             cmd.Parameters.Add("@Id", System.Data.SqlDbType.VarChar);
-            cmd.Parameters.Add("@Name", System.Data.SqlDbType.VarChar);
-            cmd.Parameters["@Id"].Value = city.Id;
-            cmd.Parameters["@Name"].Value = city.Name;
+            cmd.Parameters.Add("@CustomerId", System.Data.SqlDbType.VarChar);
+            cmd.Parameters.Add("@CargoTypeId", System.Data.SqlDbType.VarChar);
+            cmd.Parameters.Add("@Price", System.Data.SqlDbType.Decimal);
+            cmd.Parameters.Add("@DeliveryTime", System.Data.SqlDbType.Decimal);
+            cmd.Parameters.Add("@Discount", System.Data.SqlDbType.Decimal);
+            cmd.Parameters.Add("@FromCityId", System.Data.SqlDbType.VarChar);
+            cmd.Parameters.Add("@ToCityId", System.Data.SqlDbType.VarChar);
+            cmd.Parameters.Add("@PriceCategoryId", System.Data.SqlDbType.VarChar);
+            cmd.Parameters.Add("@PackageHight", System.Data.SqlDbType.Decimal);
+            cmd.Parameters.Add("@PackageWidth", System.Data.SqlDbType.Decimal);
+            cmd.Parameters.Add("@PackageLength", System.Data.SqlDbType.Decimal);
+            cmd.Parameters["@Id"].Value = plannedPackage.Id;
+            cmd.Parameters["@CustomerId"].Value = plannedPackage.CustomerId;
+            cmd.Parameters["@CargoTypeId"].Value = plannedPackage.CargoTypeId;
+            cmd.Parameters["@Price"].Value = plannedPackage.Price;
+            cmd.Parameters["@DeliveryTime"].Value = plannedPackage.DeliveryTime;
+            cmd.Parameters["@Discount"].Value = plannedPackage.Discount;
+            cmd.Parameters["@FromCityId"].Value = plannedPackage.FromCityId;
+            cmd.Parameters["@PriceCategoryId"].Value = plannedPackage.PriceCategoryId;
+            cmd.Parameters["@PackageHight"].Value = plannedPackage.PackageHight;
+            cmd.Parameters["@PackageWidth"].Value = plannedPackage.PackageWidth;
+            cmd.Parameters["@PackageLength"].Value = plannedPackage.PackageLength;
 
             cmd.ExecuteNonQuery();
         }
 
-        public List<T> ExecuteQueryToObject<T>(string queryString)
+    public List<T> ExecuteQueryToObject<T>(string queryString)
         {
             var returnValues = new List<T>();
 
