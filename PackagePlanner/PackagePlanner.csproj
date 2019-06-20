@@ -143,11 +143,14 @@
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\DeliveryInternalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SelectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlannedPackage.cs" />
     <Compile Include="Models\CargoSizeCategory.cs" />
     <Compile Include="Models\CargoType.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Connection.cs" />
@@ -158,6 +161,7 @@
     <Compile Include="Models\PriceCategory.cs" />
     <Compile Include="Models\WeightCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ErpIntegration.cs" />
     <Compile Include="Utilities\Database.cs" />
     <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />
     <Compile Include="Utilities\APIHandling.cs" />

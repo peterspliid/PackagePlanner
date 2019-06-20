@@ -141,15 +141,51 @@ discountInput.onkeypress = function(e) {
 
 const selectBestButton = document.getElementById("select-best-button");
 selectBestButton.onclick = function (e) {
-    console.log("Best clicked");
+    var data_select = {
+        CustomerID: customerIdInput.value,
+        type: typeField.value,
+        price: $('#best-price').text(),
+        discount : discountField.value
+    }
+
+
+    $.ajax({
+        url: "/api/select",
+        data: data_select,
+        success: () => console.log("success")
+    });
 }
 
 const selectFastestButton = document.getElementById("select-fastest-button");
 selectFastestButton.onclick = function(e) {
-    console.log("Fastest clicked");
+    var data_select = {
+        CustomerID: customerIdInput.value,
+        type: typeField.value,
+        price: $('#fastest-price').text(),
+        discount: discountField.value
+    }
+
+
+    $.ajax({
+        url: "/api/select",
+        data: data_select,
+        success: () => console.log("success")
+    });
 }
 
 const selectCheapestButton = document.getElementById("select-cheapest-button");
 selectCheapestButton.onclick = function(e) {
-    console.log("Cheapest clicked");
+    var data_select = {
+        CustomerID: customerIdInput.value,
+        type: typeField.value,
+        price: $('#cheapest-price').text(),
+        discount: discountField.value
+    }
+
+
+    $.ajax({
+        url: "/api/select",
+        data: data_select,
+        success: () => console.log("success")
+    });
 }
