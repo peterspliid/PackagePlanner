@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
+﻿using System.Data;
 
 namespace PackagePlanner.Models
 {
@@ -18,5 +14,5 @@ namespace PackagePlanner.Models
             Place2 = (string)row[1];
             ConnectionType = (string)row[2];
         }
-    }                              
+    }
 }
