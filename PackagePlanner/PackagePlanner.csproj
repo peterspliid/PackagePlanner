@@ -49,6 +49,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -133,6 +135,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Connected Services\ERPCustomer\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -147,8 +154,33 @@
     <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />
     <Compile Include="Utilities\APIHandling.cs" />
     <Compile Include="Utilities\Dijkstra.cs" />
+    <Compile Include="Utilities\ShortestPathCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\ERPCustomer\configuration91.svcinfo" />
+    <None Include="Connected Services\ERPCustomer\configuration.svcinfo" />
+    <Content Include="Connected Services\ERPCustomer\PackagePlanner.ERPCustomer.Customers.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ERPCustomer\PackagePlanner.ERPCustomer.GetRecIdFromKey_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ERPCustomer\PackagePlanner.ERPCustomer.IsUpdated_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ERPCustomer\PackagePlanner.ERPCustomer.ReadByRecId_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ERPCustomer\PackagePlanner.ERPCustomer.ReadMultiple_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ERPCustomer\PackagePlanner.ERPCustomer.Read_Result.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\ERPCustomer\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -161,6 +193,7 @@
     <Content Include="Img\spinner.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Connected Services\ERPCustomer\Customers.wsdl" />
     <None Include="Properties\PublishProfiles\wa-oadk - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\wa-oadk - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -204,6 +237,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ERPCustomer\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
