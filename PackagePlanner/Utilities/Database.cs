@@ -54,6 +54,12 @@ namespace PackagePlanner.Utilities
             return ExecuteQuery<string>(queryString);
         }
 
+        public List<string> GetCargoTypes()
+        {
+            var queryString = @"SELECT name FROM [dbo].[CargoType]";
+            return ExecuteQuery<string>(queryString);
+        }
+
         public List<T> ExecuteQuery<T>(string queryString)
         {
             var returnValues = new List<T>();

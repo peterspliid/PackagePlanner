@@ -33,16 +33,16 @@
                 <label class="destination-selector__label">Weight</label>
                 <select id="weight-field" class="form-control">
                     @foreach (var item in ViewBag.WeightCategories)
-                        {
-                            <option value="@item">@item</option>
-                        }
+                    {
+                        <option value="@item">@item</option>
+                    }
                 </select>
             </div>
 
             <div class="destination-selector">
                 <label class="destination-selector__label">Type</label>
                 <select id="type-field" class="form-control">
-                    @foreach (var item in ViewBag.Types)
+                    @foreach (var item in ViewBag.CargoTypes)
                     {
                         <option>@item</option>
                     }
@@ -57,15 +57,22 @@
                     <input id="size-height" type="text" placeholder="Height" class="form-control" />
                 </div>
             </div>
+            
+            <div class="text-input-group">
+                <div class="destination-selector">
+                    <label class="destination-selector__label">Customer ID</label>
+                    <input id="customerId-input" type="text" class="form-control" />
+                </div>
 
-            <div class="destination-selector">
-                <label class="destination-selector__label">Customer ID</label>
-                <input id="customerId-input" type="text" class="form-control" />
+                <div class="destination-selector">
+                    <label class="destination-selector__label">Discount</label>
+                    <input id="discount-input" value="0" type="number" min="0" max="15" maxlength="2" class="form-control" />
+                </div>
             </div>
         </div>
         <div class="col-sm">
             <div class="main-logo">
-                <img src="./Img/PackagePlannerLogo-desktop.png" />
+                <img src="/Img/PackagePlannerLogo-desktop.png" />
             </div>
         </div>
     </div>
@@ -76,7 +83,7 @@
 </div>
 
 <div class="spinner" id="spinner">
-    <img class="spinner-icon" src="./Img/spinner.png" />
+    <img class="spinner-icon" src="/Img/spinner.png" />
 </div>
 
 <div id="error-view" class="error">
