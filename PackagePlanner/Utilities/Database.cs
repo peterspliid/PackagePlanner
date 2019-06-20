@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -52,6 +53,32 @@ namespace PackagePlanner.Utilities
         {
             var queryString = @"SELECT name FROM [dbo].[WeightCategory]";
             return ExecuteQuery<string>(queryString);
+        }
+
+        public List<Models.Connection> GetConnections()
+        {
+            string queryString = @"SELECT Place1, Place2, ConnectionType FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.Connection>(queryString);
+        }
+
+        public List<T> ExecuteQueryToObject<T>(string queryString)
+        {
+            var returnValues = new List<T>();
+
+            DataTable dataTable = new DataTable();
+            var query = new SqlCommand(queryString, _connection);
+            // create data adapter
+            SqlDataAdapter da = new SqlDataAdapter(query);
+            // this will query your database and return the result to your datatable
+            da.Fill(dataTable);
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                T item = (T)Activator.CreateInstance(typeof(T), row);
+                returnValues.Add(item);
+            }
+
+            return returnValues;
         }
 
         public List<T> ExecuteQuery<T>(string queryString)

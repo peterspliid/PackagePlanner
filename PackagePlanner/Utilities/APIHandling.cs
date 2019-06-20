@@ -46,7 +46,7 @@ namespace PackagePlanner.Utilities
 
         public static int GetPriceFromEITcompanyAPI()
         {
-            var url = "http://wa-oadk.azurewebsites.net/api";
+            var url = "http://wa-eitdk.azurewebsites.net/api/GetEITRoute";
             DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
 
             return delivery.price;
