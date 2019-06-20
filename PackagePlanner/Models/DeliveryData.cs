@@ -1,9 +1,12 @@
-﻿namespace PackagePlanner.Models
+﻿using System.Collections.Generic;
+
+namespace PackagePlanner.Models
 {
     public struct DeliveryData
     {
         public bool success;
-        public int price;
-        public int time;
+        public double price;
+        public double time;
+        public List<string> route;
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PackagePlanner.Utilities
 {
-    class Dijkstra
+    public class Dijkstra
     {
         private int rank = 0;
         private int[,] L;

@@ -11,13 +11,19 @@ const fromField = document.getElementById("from-field");
 const toField = document.getElementById("to-field");
 const weightField = document.getElementById("weight-field");
 const customerIdInput = document.getElementById("customerId-input");
+const typeField = document.getElementById("type-field");
+const lengthField = document.getElementById("size-length");
+const widthField = document.getElementById("size-width");
+const heightField = document.getElementById("size-height");
+const discountField = document.getElementById("discount-input");
 
 var isFetchingResults = false;
 
-const makeRequest = function(endpoint, completion) {
+const makeRequest = function(endpoint, data, completion) {
     $.ajax({
         url: endpoint,
         dataType: 'json',
+        data: data,
         success: function (data) {
             completion(data);
         }
@@ -30,6 +36,20 @@ var startSpinner = function () {
 
 var stopSpinner = function() {
     spinner.style.visibility = 'hidden';
+}
+
+var convertArrayToString = function(array) {
+    var text = "";
+
+    for (var i = 0; i < array.length; i++) {
+        text += array[i];
+
+        if (i < array.length - 1) {
+            text += " → "
+        }
+    }
+
+    return text;
 }
 
 var fetchResults = function (completion) {
@@ -47,10 +67,13 @@ var fetchResults = function (completion) {
 
     const fastestTimeLabel = document.getElementById("fastest-time");
     const fastestPriceLabel = document.getElementById("fastest-price");
+    const fastestRouteLabel = document.getElementById("fastest-route");
     const bestTimeLabel = document.getElementById("best-time");
     const bestPriceLabel = document.getElementById("best-price");
+    const bestRouteLabel = document.getElementById("best-route");
     const cheapestTimeLabel = document.getElementById("cheapest-time");
     const cheapestPriceLabel = document.getElementById("cheapest-price");
+    const cheapestRouteLabel = document.getElementById("cheapest-route");
 
     if (customerId === "") {
         errorView.innerHTML = "No customer id provided"
@@ -60,7 +83,19 @@ var fetchResults = function (completion) {
         return;
     }
 
-    makeRequest('api/delivery', function (e) {
+    var data = {
+        "from": from,
+        "to": to,
+        "weight": weight,
+        "customerId": customerId,
+        "lenght": lengthField.value,
+        "height": heightField.value,
+        "width": widthField.value,
+        "discount": discountField.value,
+        "type": typeField.value
+    }
+
+    makeRequest('api/delivery', data, function (e) {
         fastestTimeLabel.innerHTML = e.fastest.time;
         fastestPriceLabel.innerHTML = e.fastest.price;
         bestTimeLabel.innerHTML = e.best.time;
@@ -68,13 +103,26 @@ var fetchResults = function (completion) {
         cheapestTimeLabel.innerHTML = e.cheapest.time;
         cheapestPriceLabel.innerHTML = e.cheapest.price;
 
+        if (e.fastest.route) {
+            var text = convertArrayToString(e.fastest.route)
+            fastestRouteLabel.innerHTML = text;
+        }
+
+        if (e.best.route) {
+            var text = convertArrayToString(e.best.route)
+            bestRouteLabel.innerHTML = text;
+        }
+
+        if (e.cheapest.route) {
+            var text = convertArrayToString(e.cheapest.route)
+            cheapestRouteLabel.innerHTML = text;
+        }
+
         stopSpinner();
         list.style.visibility = "visible";
         isFetchingResults = false;
     });
 }
-
-list.style.visibility = "hidden";
 
 const button = document.getElementById("go-button");
 
@@ -84,6 +132,11 @@ button.onclick = function () {
     }
 
     fetchResults();
+}
+
+const discountInput = document.getElementById("discount-input");
+discountInput.onkeypress = function(e) {
+    e.preventDefault();
 }
 
 const selectBestButton = document.getElementById("select-best-button");
