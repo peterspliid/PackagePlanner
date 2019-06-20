@@ -6,6 +6,6 @@ CREATE TABLE CargoSizeCategory (
 
 INSERT INTO CargoSizeCategory
 VALUES
-	('A', 25, 'cm'),
-	('B', 40, 'cm'),
-	('C', 200, 'cm');
+	('Small', 25, 'cm'),
+	('Medium', 40, 'cm'),
+	('Large', 200, 'cm');

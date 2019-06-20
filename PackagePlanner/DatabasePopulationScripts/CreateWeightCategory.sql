@@ -1,10 +1,10 @@
-CREATE TABLE Type (
-	name varchar(255) PRIMARY KEY,
-	price decimal
+CREATE TABLE WeightCategory (
+	Id varchar(255) PRIMARY KEY,
+	Name varchar(255) UNIQUE
 );
 
 INSERT INTO WeightCategory
 VALUES
-	('Less than 1kg', 10),
-	('1kg - 5kg', 15),
-	('5kg - 20kg', 20);
+	('Light','Less than 1kg'),
+	('Normal','1kg - 5kg'),
+	('Heavy','5kg - 20kg');
