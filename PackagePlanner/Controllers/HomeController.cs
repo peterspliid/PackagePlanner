@@ -13,6 +13,8 @@ namespace PackagePlanner.Controllers
 
             //ViewBag.WeightCategories = GetWeightCatagories();
 
+            //ViewBag.Debug = AlgorithmDijkstraAirOnly.GetTotalPrice();
+
             return View();
         }
     }
