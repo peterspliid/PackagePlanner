@@ -14,11 +14,12 @@ namespace PackagePlanner.Utilities
 {
     public static class APIHandling
     {
+        private static HttpClient client = new HttpClient();
 
         public static int GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-oadk.azurewebsites.net/api?";
-            DeliveryApi delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
 
             return delivery.price;
         }
@@ -27,7 +28,7 @@ namespace PackagePlanner.Utilities
         {
             var url = "http://wa-tldk.azurewebsites.net/api/GetTelstarRouteExternal?";
 
-            DeliveryApi delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
 
             return delivery.price;
         }
@@ -35,12 +36,12 @@ namespace PackagePlanner.Utilities
         public static int GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-oadk.azurewebsites.net/api?";
-            DeliveryApi delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
 
             return delivery.price;
         }
 
-        public static DeliveryApi AsyncTaskCallWebApiAsync(string url, Dictionary<String, String> parameters)
+        public static DeliveryData AsyncTaskCallWebApiAsync(string url, Dictionary<String, String> parameters)
         {
             HttpClient client = new HttpClient();
 
@@ -71,12 +72,8 @@ namespace PackagePlanner.Utilities
                 {
                     Console.WriteLine("Internal server Error");
                 }
-                return null;
 
-        } 
-          
-
-
+                return new DeliveryData();
+        }
     }
-
 }

@@ -10,8 +10,8 @@ namespace PackagePlanner.Controllers
         {
             ViewBag.Title = "Package Planner!";
             ViewBag.Cities = Database.Instance.GetCities();
-
-            //ViewBag.WeightCategories = GetWeightCatagories();
+            ViewBag.WeightCategories = Database.Instance.GetWeightCatagories();
+            ViewBag.CargoTypes = Database.Instance.GetCargoTypes();
 
             //ViewBag.Debug = AlgorithmDijkstraAirOnly.GetTotalPrice();
 

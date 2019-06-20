@@ -1,4 +1,11 @@
-﻿<h1 class="title">@ViewBag.Title</h1>
+﻿@{
+    var types = new List<string>();
+    types.Add("Weapon");
+    types.Add("Animals");
+    ViewBag.Types = types;
+}
+
+<h1 class="title">@ViewBag.Title</h1>
 
 <h1 class="title">@ViewBag.Debug</h1>
 <h1 class="title">@ViewBag.Debug2</h1>
@@ -28,25 +35,47 @@
             <div class="destination-selector">
                 <label class="destination-selector__label">Weight</label>
                 <select id="weight-field" class="form-control">
-                    <option>< 1kg</option>
-                    <option>1 - 5 kg</option>
-                    <option>5 - 20kg</option>
-
-                    @*@foreach (var item in ViewBag.WeightCategories)
-                        {
-                            <option value="@item">@item</option>
-                        }*@
-
+                    @foreach (var item in ViewBag.WeightCategories)
+                    {
+                        <option value="@item">@item</option>
+                    }
                 </select>
             </div>
+
             <div class="destination-selector">
-                <label class="destination-selector__label">Customer ID</label>
-                <input id="customerId-input" type="text" class="form-control" />
+                <label class="destination-selector__label">Type</label>
+                <select id="type-field" class="form-control">
+                    @foreach (var item in ViewBag.CargoTypes)
+                    {
+                        <option>@item</option>
+                    }
+                </select>
+            </div>
+
+            <div class="destination-selector">
+                <label class="destination-selector__label">Package Size</label>
+                <div class="text-input-group">
+                    <input id="size-length" type="text" placeholder="Length" class="form-control" />
+                    <input id="size-width" type="text" placeholder="Width" class="form-control" />
+                    <input id="size-height" type="text" placeholder="Height" class="form-control" />
+                </div>
+            </div>
+            
+            <div class="text-input-group">
+                <div class="destination-selector">
+                    <label class="destination-selector__label">Customer ID</label>
+                    <input id="customerId-input" type="text" class="form-control" />
+                </div>
+
+                <div class="destination-selector">
+                    <label class="destination-selector__label">Discount</label>
+                    <input id="discount-input" value="0" type="number" min="0" max="15" maxlength="2" class="form-control" />
+                </div>
             </div>
         </div>
         <div class="col-sm">
             <div class="main-logo">
-                <img src="./Img/PackagePlannerLogo-desktop.png" />
+                <img src="/Img/PackagePlannerLogo-desktop.png" />
             </div>
         </div>
     </div>
@@ -57,7 +86,7 @@
 </div>
 
 <div class="spinner" id="spinner">
-    <img class="spinner-icon" src="./Img/spinner.png" />
+    <img class="spinner-icon" src="/Img/spinner.png" />
 </div>
 
 <div id="error-view" class="error">

@@ -11,13 +11,19 @@ const fromField = document.getElementById("from-field");
 const toField = document.getElementById("to-field");
 const weightField = document.getElementById("weight-field");
 const customerIdInput = document.getElementById("customerId-input");
+const typeField = document.getElementById("type-field");
+const lengthField = document.getElementById("size-length");
+const widthField = document.getElementById("size-width");
+const heightField = document.getElementById("size-height");
+const discountField = document.getElementById("discount-input");
 
 var isFetchingResults = false;
 
-const makeRequest = function(endpoint, completion) {
+const makeRequest = function(endpoint, data, completion) {
     $.ajax({
         url: endpoint,
-        dataType: 'jsonp',
+        dataType: 'json',
+        data: data,
         success: function (data) {
             completion(data);
         }
@@ -38,7 +44,6 @@ var fetchResults = function (completion) {
     isFetchingResults = true;
     startSpinner();
 
-    // Database code
     const from = fromField.value;
     const to = toField.value;
     const weight = weightField.value;
@@ -53,14 +58,6 @@ var fetchResults = function (completion) {
     const cheapestTimeLabel = document.getElementById("cheapest-time");
     const cheapestPriceLabel = document.getElementById("cheapest-price");
 
-    fastestTimeLabel.innerHTML = "8";
-    fastestPriceLabel.innerHTML = "15";
-    bestTimeLabel.innerHTML = "8";
-    bestPriceLabel.innerHTML = "15";
-    cheapestTimeLabel.innerHTML = "24";
-    cheapestPriceLabel.innerHTML = "12";
-
-
     if (customerId === "") {
         errorView.innerHTML = "No customer id provided"
         errorView.style.display = 'block';
@@ -69,17 +66,31 @@ var fetchResults = function (completion) {
         return;
     }
 
-    setTimeout(stopSpinner, 2000);
-    setTimeout(function() {
+    var data = {
+        "from": from,
+        "to": to,
+        "weight": weight,
+        "customerId": customerId,
+        "lenght": lengthField.value,
+        "height": heightField.value,
+        "width": widthField.value,
+        "discount": discountField.value,
+        "type": typeField.value
+    }
+
+    makeRequest('api/delivery', data, function (e) {
+        fastestTimeLabel.innerHTML = e.fastest.time;
+        fastestPriceLabel.innerHTML = e.fastest.price;
+        bestTimeLabel.innerHTML = e.best.time;
+        bestPriceLabel.innerHTML = e.best.price;
+        cheapestTimeLabel.innerHTML = e.cheapest.time;
+        cheapestPriceLabel.innerHTML = e.cheapest.price;
+
+        stopSpinner();
         list.style.visibility = "visible";
         isFetchingResults = false;
-        makeRequest('', function(e) {  // API ENDPOINT GOES IN HERE!!
-            console.log(e);
-        });
-    }, 2000)
+    });
 }
-
-list.style.visibility = "hidden";
 
 const button = document.getElementById("go-button");
 
@@ -89,6 +100,11 @@ button.onclick = function () {
     }
 
     fetchResults();
+}
+
+const discountInput = document.getElementById("discount-input");
+discountInput.onkeypress = function(e) {
+    e.preventDefault();
 }
 
 const selectBestButton = document.getElementById("select-best-button");
