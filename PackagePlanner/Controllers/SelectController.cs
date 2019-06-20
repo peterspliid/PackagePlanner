@@ -9,6 +9,14 @@ namespace PackagePlanner.Controllers
     {
         public string GET(string CustomerID, string type, double price, double discount)
         {
+            PlannedPackage package = new PlannedPackage()
+            {
+                CustomerId = CustomerID,
+                CargoTypeId = type,
+                Price = price,
+                Discount = discount
+
+            };
 
             return "done logging in database";
         }

@@ -32,5 +32,9 @@ namespace PackagePlanner.Models
             PackageWidth = (double)row[10];
             PackageLength = (double)row[11];
         }
+        public PlannedPackage()
+        {
+
+        }
     }
 }
