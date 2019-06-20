@@ -13,15 +13,15 @@ namespace PackagePlanner.Utilities
         static HttpClient client = new HttpClient();
 
 
-        static async Task<DeliveryApi> GetProductAsync(string path)
+        static async Task<DeliveryData> GetProductAsync(string path)
         {
-            DeliveryApi delivery = null;
+            DeliveryData deliveryData = new DeliveryData();
             HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
-                delivery = await response.Content.ReadAsAsync<DeliveryApi>();
+                deliveryData = await response.Content.ReadAsAsync<DeliveryData>();
             }
-            return delivery;
+            return deliveryData;
         }
 
     }

@@ -17,7 +17,7 @@ var isFetchingResults = false;
 const makeRequest = function(endpoint, completion) {
     $.ajax({
         url: endpoint,
-        dataType: 'jsonp',
+        dataType: 'json',
         success: function (data) {
             completion(data);
         }
@@ -53,14 +53,6 @@ var fetchResults = function (completion) {
     const cheapestTimeLabel = document.getElementById("cheapest-time");
     const cheapestPriceLabel = document.getElementById("cheapest-price");
 
-    fastestTimeLabel.innerHTML = "8";
-    fastestPriceLabel.innerHTML = "15";
-    bestTimeLabel.innerHTML = "8";
-    bestPriceLabel.innerHTML = "15";
-    cheapestTimeLabel.innerHTML = "24";
-    cheapestPriceLabel.innerHTML = "12";
-
-
     if (customerId === "") {
         errorView.innerHTML = "No customer id provided"
         errorView.style.display = 'block';
@@ -73,8 +65,13 @@ var fetchResults = function (completion) {
     setTimeout(function() {
         list.style.visibility = "visible";
         isFetchingResults = false;
-        makeRequest('', function(e) {  // API ENDPOINT GOES IN HERE!!
-            console.log(e);
+        makeRequest('api/delivery', function(e) {
+            fastestTimeLabel.innerHTML = e.fastest.time;
+            fastestPriceLabel.innerHTML = e.fastest.price;
+            bestTimeLabel.innerHTML = e.best.time;
+            bestPriceLabel.innerHTML = e.best.price;
+            cheapestTimeLabel.innerHTML = e.cheapest.time;
+            cheapestPriceLabel.innerHTML = e.cheapest.price;
         });
     }, 2000)
 }
