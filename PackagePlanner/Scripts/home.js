@@ -14,6 +14,16 @@ const customerIdInput = document.getElementById("customerId-input");
 
 var isFetchingResults = false;
 
+const makeRequest = function(endpoint, completion) {
+    $.ajax({
+        url: endpoint,
+        dataType: 'jsonp',
+        success: function (data) {
+            completion(data);
+        }
+    });
+}
+
 var startSpinner = function () {
     spinner.style.visibility = 'visible';
 }
@@ -63,6 +73,9 @@ var fetchResults = function (completion) {
     setTimeout(function() {
         list.style.visibility = "visible";
         isFetchingResults = false;
+        makeRequest('', function(e) {  // API ENDPOINT GOES IN HERE!!
+            console.log(e);
+        });
     }, 2000)
 }
 
