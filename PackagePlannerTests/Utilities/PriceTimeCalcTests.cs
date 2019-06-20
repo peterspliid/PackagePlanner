@@ -14,7 +14,9 @@ namespace PackagePlanner.Utilities.Tests
         [TestMethod()]
         public void calcPriceTest()
         {
-            Assert.Equals(PriceTimeCalc.calcPrice(15, 15, 15, 3), 15);
+            Assert.AreEqual(PriceTimeCalc.calcPrice(15.0, 15.0, 15.0, 3.0), 15);
+            Assert.AreEqual(PriceTimeCalc.calcPrice(30.0, 35.0, 32.0, 0.5), 15);
+            Assert.AreEqual(PriceTimeCalc.calcPrice(7.0, 50.0, 1.0, 15.0), 90);
         }
     }
 }

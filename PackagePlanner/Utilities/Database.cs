@@ -102,8 +102,14 @@ namespace PackagePlanner.Utilities
         }
         public List<Models.Customer> GetCustomers()
         {
-            string queryString = @"SELECT Id, Name, FROM [dbo].[Customer]";
+            string queryString = @"SELECT Id, Name FROM [dbo].[Customer]";
             return ExecuteQueryToObject<Models.Customer>(queryString);
+        }
+
+        public List<Models.City> GetCity()
+        {
+            string queryString = @"SELECT Id, Name FROM [dbo].[City]";
+            return ExecuteQueryToObject<Models.City>(queryString);
         }
 
         public void SetPlannedPackage(Models.PlannedPackage plannedPackage)

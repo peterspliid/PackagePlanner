@@ -9,11 +9,7 @@ namespace PackagePlanner.Utilities
     {
         public static int calcPrice(double width, double height, double length, double weight)
         {
-            List<Models.PriceCategory> priceCategories = Database.Instance.GetPriceCategory();
-            List<Models.WeightCategory> weightCategories = Database.Instance.GetWeightCategory();
-            List<Models.CargoSizeCategory> sizeCategories = Database.Instance.GetCargoSize();
-
-            double largest = width < height && width < length ? width : (height < width && height < length ? height : length);
+            double largest = width > height && width > length ? width : (height > width && height > length ? height : length);
 
             if (largest <= 25)
             {

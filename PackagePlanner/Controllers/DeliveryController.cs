@@ -21,15 +21,16 @@ namespace PackagePlanner.Controllers
                 packageWidth = packageWidth
             };
             Utilities.WeightCalculator wc = new Utilities.WeightCalculator(apiRequestParams);
-            Utilities.ShortestPathCalculator.ShortestPathFlight(wc, apiRequestParams.fromDestination, apiRequestParams.toDestination);
+            List<string> path = Utilities.ShortestPathCalculator.ShortestPathFlight(wc, apiRequestParams.fromDestination, apiRequestParams.toDestination);
 
-
+            int pricePerSegment = Utilities.PriceTimeCalc.calcPrice(packageWidth, packageHeight, packageLength, packageWeight);
+            int price = path.Count * pricePerSegment;
             var deliveryData = new DeliveryData()
             {
-                price = apiRequestParams.packageWidth,
-                route = new List<string>(),
+                price = price,
+                route = path,
                 success = true,
-                time = 8
+                time = 8 * path.Count
             };
 
             return deliveryData;
