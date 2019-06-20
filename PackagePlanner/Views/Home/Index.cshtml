@@ -34,12 +34,7 @@
             </div>
             <div class="destination-selector">
                 <label class="destination-selector__label">Weight</label>
-                <select id="weight-field" class="form-control">
-                    @foreach (var item in ViewBag.WeightCategories)
-                    {
-                        <option value="@item">@item</option>
-                    }
-                </select>
+                <input id="weight-field" type="number" min="0" placeholder="Weight..." class="form-control" />
             </div>
 
             <div class="destination-selector">
@@ -64,7 +59,12 @@
             <div class="text-input-group">
                 <div class="destination-selector">
                     <label class="destination-selector__label">Customer ID</label>
-                    <input id="customerId-input" type="text" class="form-control" />
+                    <select id="customerId-input" class="form-control">
+                        @foreach (var item in ViewBag.Customers)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
                 </div>
 
                 <div class="destination-selector">

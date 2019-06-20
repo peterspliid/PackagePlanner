@@ -86,6 +86,12 @@ namespace PackagePlanner.Utilities
             return ExecuteQuery<string>(queryString);
         }
 
+        public List<string> GetCustomers()
+        {
+            var queryString = @"SELECT id FROM [dbo].[Customer]";
+            return ExecuteQuery<string>(queryString);
+        }
+
         public List<T> ExecuteQuery<T>(string queryString)
         {
             var returnValues = new List<T>();
