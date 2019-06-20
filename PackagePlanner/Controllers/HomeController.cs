@@ -10,8 +10,7 @@ namespace PackagePlanner.Controllers
         {
             ViewBag.Title = "Package Planner!";
             ViewBag.Cities = Database.Instance.GetCities();
-
-            //ViewBag.WeightCategories = GetWeightCatagories();
+            ViewBag.WeightCategories = Database.Instance.GetWeightCatagories();
 
             return View();
         }

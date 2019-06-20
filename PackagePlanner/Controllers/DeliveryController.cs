@@ -1,19 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Threading;
 using System.Web.Http;
-using System.Web.Mvc;
 using PackagePlanner.Models;
 
 namespace PackagePlanner.Controllers
 {
     public class DeliveryController : ApiController
     {
-        public DeliveryApi Get()
+        public Delivery Get()
         {
-            return new DeliveryApi(true, 20, 16);
+            var delivery = new Delivery()
+            {
+                best = new DeliveryData()
+                {
+                    price = 100,
+                    time = 2,
+                    success = true
+                },
+                cheapest = new DeliveryData()
+                {
+                    price = 15,
+                    time = 4,
+                    success = true
+                },
+                fastest = new DeliveryData()
+                {
+                    price = 100,
+                    time = 2,
+                    success = true
+                }
+            };
+
+            return delivery;
         }
     }
 }
