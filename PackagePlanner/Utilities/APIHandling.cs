@@ -53,21 +53,21 @@ namespace PackagePlanner.Utilities
 
             url += query;
             client.BaseAddress = new Uri(url);
-            client.DefaultRequestHeaders.Accept.Clear();  
+            client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             // TODO: Add query to URL
 
-            //GET Method  
-            HttpResponseMessage response = client.GetAsync(query).Result;  
+            //GET Method
+            HttpResponseMessage response = client.GetAsync(query).Result;
 
-                if (response.IsSuccessStatusCode)  
+                if (response.IsSuccessStatusCode)
                 {
-                    DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;  
+                    DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;
                     Debug.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
                     Debug.WriteLine("URL: {0}", client.BaseAddress);
                 return delivery;
-                }  
+                }
                 else
                 {
                     Console.WriteLine("Internal server Error");

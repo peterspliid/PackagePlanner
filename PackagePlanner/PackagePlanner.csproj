@@ -145,11 +145,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CargoSizeCategory.cs" />
+    <Compile Include="Models\CargoType.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Config.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\ApiRequestParams.cs" />
     <Compile Include="Models\ConnectionData.cs" />
     <Compile Include="Models\DeliveryData.cs" />
     <Compile Include="Models\Delivery.cs" />
+    <Compile Include="Models\PriceCategory.cs" />
+    <Compile Include="Models\WeightCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Database.cs" />
     <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />

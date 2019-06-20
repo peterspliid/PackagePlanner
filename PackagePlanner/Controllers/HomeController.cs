@@ -14,8 +14,11 @@ namespace PackagePlanner.Controllers
             ShortestPathCalculator.ShortestPathFlight(par);
             ViewBag.Title = "Package Planner!";
             ViewBag.Cities = Database.Instance.GetCities();
-            ViewBag.WeightCategories = Database.Instance.GetWeightCatagories();
+
+            var weigthClasses = Database.Instance.GetWeightCatagories();
+            ViewBag.WeightCategories = weigthClasses;
             ViewBag.CargoTypes = Database.Instance.GetCargoTypes();
+            ViewBag.Customers = Database.Instance.GetCustomers();
 
             // ViewBag.Debug = AlgorithmDijkstraAirOnly.GetTotalPrice();
 

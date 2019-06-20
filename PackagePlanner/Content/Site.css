@@ -63,6 +63,10 @@ textarea {
     display: flex;
 }
 
+.text-input-group {
+    max-width: 280px;
+}
+
 .results-list {
     width: 100%;
     min-height: 200px;

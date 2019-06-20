@@ -61,6 +61,42 @@ namespace PackagePlanner.Utilities
             return ExecuteQueryToObject<Models.Connection>(queryString);
         }
 
+        public List<Models.CargoSizeCategory> GetCargoSize()
+        {
+            string queryString = @"SELECT Id, MaxSize, Unit FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.CargoSizeCategory>(queryString);
+        }
+
+        public List<Models.CargoType> GetCargoType()
+        {
+            string queryString = @"SELECT Id, Name FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.CargoType>(queryString);
+        }
+
+        public List<Models.City> GetCity()
+        {
+            string queryString = @"SELECT Id, Name FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.City>(queryString);
+        }
+
+        public List<Models.Config> GetConfig()
+        {
+            string queryString = @"SELECT Name, Value FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.Config>(queryString);
+        }
+
+        public List<Models.PriceCategory> GetPriceCategory()
+        {
+            string queryString = @"SELECT Id, CargoSizeCategoryId, WeightCategoryId, Price, Currency FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.PriceCategory>(queryString);
+        }
+
+        public List<Models.WeightCategory> GetWeightCategory()
+        {
+            string queryString = @"SELECT Id, CargoSizeCategoryId, WeightCategoryId, Price, Currency FROM [dbo].[Connection]";
+            return ExecuteQueryToObject<Models.WeightCategory>(queryString);
+        }
+
         public List<T> ExecuteQueryToObject<T>(string queryString)
         {
             var returnValues = new List<T>();
@@ -83,6 +119,12 @@ namespace PackagePlanner.Utilities
         public List<string> GetCargoTypes()
         {
             var queryString = @"SELECT name FROM [dbo].[CargoType]";
+            return ExecuteQuery<string>(queryString);
+        }
+
+        public List<string> GetCustomers()
+        {
+            var queryString = @"SELECT id FROM [dbo].[Customer]";
             return ExecuteQuery<string>(queryString);
         }
 
