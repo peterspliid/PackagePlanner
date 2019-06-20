@@ -2,13 +2,13 @@
 
 namespace PackagePlanner.Models
 {
-    public class CargoSize
+    public class CargoSizeCategory
     {
         public string Id { get; set; }
         public int MaxSize { get; set; }
         public string Unit { get; set; }
 
-        public CargoSize(DataRow row)
+        public CargoSizeCategory(DataRow row)
         {
             Id = (string)row[0];
             MaxSize = (int)row[1];
