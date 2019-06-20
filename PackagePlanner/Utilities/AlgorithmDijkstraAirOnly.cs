@@ -8,10 +8,15 @@ namespace PackagePlanner.Utilities
 {
     public static class AlgorithmDijkstraAirOnly
     {
-        public static int GetTotalPrice()
+        public static double GetTotalPrice()
         {
-            //replace with call to algorithm
-            int totalPrice = APIHandling.GetPriceFromOceanicAirlinesAPI();
+            //ALL this can be replaced with new algorithm class
+
+            ApiRequestParams parameters = new ApiRequestParams();
+            parameters.SetApiRequestParamsToDefault();
+
+            double totalPrice = APIHandling.GetPriceFromOceanicAirlinesAPI(parameters.UpdateAndFormatDictionary());
+            Console.Write("totalprice: " + totalPrice);
             return totalPrice;
         }
     }

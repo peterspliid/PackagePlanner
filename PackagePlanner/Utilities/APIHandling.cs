@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,64 +16,64 @@ namespace PackagePlanner.Utilities
     {
         private static HttpClient client = new HttpClient();
 
-        public static int GetPriceFromOceanicAirlinesAPI()
+        public static double GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
         {
-            var url = "http://wa-oadk.azurewebsites.net/api";
-            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
+            var url = "http://wa-oadk.azurewebsites.net/api/delivery?";
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
             return delivery.price;
         }
 
-        public static int GetPriceFromTelstarAPI()
+        public static double GetPriceFromTelstarAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-tldk.azurewebsites.net/api/GetTelstarRouteExternal?";
 
-            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
             return delivery.price;
         }
 
-        static async Task<DeliveryData> GetProductAsync(string path)
+        public static double GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
         {
-            DeliveryData deliveryData = new DeliveryData();
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                deliveryData = await response.Content.ReadAsAsync<DeliveryData>();
-            }
-
-            return deliveryData;
-        }
-
-        public static int GetPriceFromEITcompanyAPI()
-        {
-            var url = "http://wa-eitdk.azurewebsites.net/api/GetEITRoute";
-            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
+            var url = "http://wa-eitdk.azurewebsites.net/api/GetEITRoute?";
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
             return delivery.price;
         }
 
-        public static DeliveryData AsyncTaskCallWebApiAsync(string url)
+        public static DeliveryData AsyncTaskCallWebApiAsync(string url, Dictionary<String, String> parameters)
         {
             HttpClient client = new HttpClient();
 
-            client.BaseAddress = new Uri(url);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //GET Method  
-            HttpResponseMessage response = client.GetAsync(("api")).Result;
-            if (response.IsSuccessStatusCode)
+            string query;
+            using (var content = new FormUrlEncodedContent(parameters))
             {
-                DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;
-                Console.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
-                return delivery;
-            }
-            else
-            {
-                Console.WriteLine("Internal server Error");
+                query = content.ReadAsStringAsync().Result;
             }
 
-            return new DeliveryData();
+            url += query;
+            client.BaseAddress = new Uri(url);
+            client.DefaultRequestHeaders.Accept.Clear();  
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            // TODO: Add query to URL
+
+            //GET Method  
+            HttpResponseMessage response = client.GetAsync(query).Result;  
+
+                if (response.IsSuccessStatusCode)  
+                {
+                    DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;  
+                    Debug.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
+                    Debug.WriteLine("URL: {0}", client.BaseAddress);
+                return delivery;
+                }  
+                else
+                {
+                    Console.WriteLine("Internal server Error");
+                }
+
+                return new DeliveryData();
         }
     }
 }

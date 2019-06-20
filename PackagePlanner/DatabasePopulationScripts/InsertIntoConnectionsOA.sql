@@ -1,0 +1,29 @@
+INSERT INTO Connection (
+   	Place1,
+	Place2,
+	ConnectionType
+)
+VALUES
+('amatave','kapguardafui','oa'),
+('amatave','kapstaden','oa'),
+('cairo','suakin','oa'),
+('darfur','kabalo','oa'),
+('darfur','suakin','oa'),
+('darfur','tripoli','oa'),
+('dragebjerget','kapstaden','oa'),
+('dragebjerget','victoriasoen','oa'),
+('guldkysten','hvalbugten','oa'),
+('guldkysten','luanda','oa'),
+('guldkysten','marrakesh','oa'),
+('guldkysten','tripoli','oa'),
+('hvalbugten','kapstaden','oa'),
+('hvalbugten','luanda','oa'),
+('kabalo','kapstaden','oa'),
+('kapguardafui','victoriasoen','oa'),
+('kapstaden','kapStMarie','oa'),
+('marrakesh','sierraLeone','oa'),
+('marrakesh','tanger','oa'),
+('sierraLeone','stHelena','oa'),
+('stHelena','kapstaden','oa'),
+('suakin','victoriasoen','oa'),
+('tanger','tripoli','oa');

@@ -7,6 +7,9 @@
 
 <h1 class="title">@ViewBag.Title</h1>
 
+<h1 class="title">@ViewBag.Debug</h1>
+<h1 class="title">@ViewBag.Debug2</h1>
+
 <div class="container">
     <div class="row">
         <div class="col-sm main-form">
@@ -33,16 +36,16 @@
                 <label class="destination-selector__label">Weight</label>
                 <select id="weight-field" class="form-control">
                     @foreach (var item in ViewBag.WeightCategories)
-                        {
-                            <option value="@item">@item</option>
-                        }
+                    {
+                        <option value="@item">@item</option>
+                    }
                 </select>
             </div>
 
             <div class="destination-selector">
                 <label class="destination-selector__label">Type</label>
                 <select id="type-field" class="form-control">
-                    @foreach (var item in ViewBag.Types)
+                    @foreach (var item in ViewBag.CargoTypes)
                     {
                         <option>@item</option>
                     }
@@ -52,15 +55,22 @@
             <div class="destination-selector">
                 <label class="destination-selector__label">Package Size</label>
                 <div class="text-input-group">
-                    <input id="size-length" type="text" placeholder="Length" class="form-control" />
-                    <input id="size-width" type="text" placeholder="Width" class="form-control" />
-                    <input id="size-height" type="text" placeholder="Height" class="form-control" />
+                    <input id="size-length" type="number" min="0" placeholder="Length" class="form-control" />
+                    <input id="size-width" type="number" min="0" placeholder="Width" class="form-control" />
+                    <input id="size-height" type="number" min="0" placeholder="Height" class="form-control" />
                 </div>
             </div>
+            
+            <div class="text-input-group">
+                <div class="destination-selector">
+                    <label class="destination-selector__label">Customer ID</label>
+                    <input id="customerId-input" type="text" class="form-control" />
+                </div>
 
-            <div class="destination-selector">
-                <label class="destination-selector__label">Customer ID</label>
-                <input id="customerId-input" type="text" class="form-control" />
+                <div class="destination-selector">
+                    <label class="destination-selector__label">Discount</label>
+                    <input id="discount-input" value="0" type="number" min="0" max="15" maxlength="2" class="form-control" />
+                </div>
             </div>
         </div>
         <div class="col-sm">
@@ -97,6 +107,10 @@
                 <span id="best-price" class="result-amount"></span>
                 <span class="result-unit">dollars</span>
             </div>
+            <div class="result-info__section">
+                <span class="result-metric">Route:</span>
+                <span id="best-route" class="result-amount"></span>
+            </div>
         </div>
         <button id="select-best-button" class="results__select btn btn-light">Select</button>
     </div>
@@ -113,6 +127,10 @@
                 <span id="fastest-price" class="result-amount"></span>
                 <span class="result-unit">dollars</span>
             </div>
+            <div class="result-info__section">
+                <span class="result-metric">Route:</span>
+                <span id="fastest-route" class="result-amount"></span>
+            </div>
         </div>
         <button id="select-fastest-button" class="results__select btn btn-light">Select</button>
     </div>
@@ -128,6 +146,10 @@
                 <span class="result-metric">Price:</span>
                 <span id="cheapest-price" class="result-amount"></span>
                 <span class="result-unit">dollars</span>
+            </div>
+            <div class="result-info__section">
+                <span class="result-metric">Route:</span>
+                <span id="cheapest-route" class="result-amount"></span>
             </div>
         </div>
         <button id="select-cheapest-button" class="results__select btn btn-light">Select</button>

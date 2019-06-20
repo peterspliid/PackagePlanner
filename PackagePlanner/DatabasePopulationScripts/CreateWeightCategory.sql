@@ -1,4 +1,4 @@
-CREATE TABLE WeightCategory (
+CREATE TABLE Type (
 	name varchar(255) PRIMARY KEY,
 	price decimal
 );

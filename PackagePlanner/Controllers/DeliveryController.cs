@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Web.Http;
 using PackagePlanner.Models;
 
@@ -14,19 +15,22 @@ namespace PackagePlanner.Controllers
                 {
                     price = 100,
                     time = 2,
-                    success = true
+                    success = true,
+                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere"}
                 },
                 cheapest = new DeliveryData()
                 {
                     price = 15,
                     time = 4,
-                    success = true
+                    success = true,
+                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere" }
                 },
                 fastest = new DeliveryData()
                 {
                     price = 100,
                     time = 2,
-                    success = true
+                    success = true,
+                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere" }
                 }
             };
 

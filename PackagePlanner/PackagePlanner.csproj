@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\ApiRequestParams.cs" />
     <Compile Include="Models\DeliveryData.cs" />
     <Compile Include="Models\Delivery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
