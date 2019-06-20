@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PackagePlanner.Models;
 
 namespace PackagePlanner.Utilities
 {
     public static class AlgorithmDijkstraAirOnly
     {
-        public static int GetPriceFromOceanicAirlinesAPI()
+        public static int GetTotalPrice()
         {
-            // Make sure you call API
-            return 25;
+            //replace with call to algorithm
+            int totalPrice = APIHandling.GetPriceFromOceanicAirlinesAPI();
+            return totalPrice;
         }
     }
 }
