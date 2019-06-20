@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SelectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -150,6 +151,7 @@
     <Compile Include="Models\DeliveryData.cs" />
     <Compile Include="Models\Delivery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\ErpIntegration.cs" />
     <Compile Include="Utilities\Database.cs" />
     <Compile Include="Utilities\AlgorithmDijkstraAirOnly.cs" />
     <Compile Include="Utilities\APIHandling.cs" />
