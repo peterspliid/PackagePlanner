@@ -38,7 +38,6 @@ var fetchResults = function (completion) {
     isFetchingResults = true;
     startSpinner();
 
-    // Database code
     const from = fromField.value;
     const to = toField.value;
     const weight = weightField.value;
@@ -61,19 +60,18 @@ var fetchResults = function (completion) {
         return;
     }
 
-    setTimeout(stopSpinner, 2000);
-    setTimeout(function() {
+    makeRequest('api/delivery', function (e) {
+        fastestTimeLabel.innerHTML = e.fastest.time;
+        fastestPriceLabel.innerHTML = e.fastest.price;
+        bestTimeLabel.innerHTML = e.best.time;
+        bestPriceLabel.innerHTML = e.best.price;
+        cheapestTimeLabel.innerHTML = e.cheapest.time;
+        cheapestPriceLabel.innerHTML = e.cheapest.price;
+
+        stopSpinner();
         list.style.visibility = "visible";
         isFetchingResults = false;
-        makeRequest('api/delivery', function(e) {
-            fastestTimeLabel.innerHTML = e.fastest.time;
-            fastestPriceLabel.innerHTML = e.fastest.price;
-            bestTimeLabel.innerHTML = e.best.time;
-            bestPriceLabel.innerHTML = e.best.price;
-            cheapestTimeLabel.innerHTML = e.cheapest.time;
-            cheapestPriceLabel.innerHTML = e.cheapest.price;
-        });
-    }, 2000)
+    });
 }
 
 list.style.visibility = "hidden";

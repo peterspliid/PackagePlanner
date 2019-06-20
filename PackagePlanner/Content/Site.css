@@ -59,6 +59,10 @@ textarea {
     display: block;
 }
 
+.text-input-group {
+    display: flex;
+}
+
 .results-list {
     width: 100%;
     min-height: 200px;
