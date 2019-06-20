@@ -38,6 +38,20 @@ var stopSpinner = function() {
     spinner.style.visibility = 'hidden';
 }
 
+var convertArrayToString = function(array) {
+    var text = "";
+
+    for (var i = 0; i < array.length; i++) {
+        text += array[i];
+
+        if (i < array.length - 1) {
+            text += " → "
+        }
+    }
+
+    return text;
+}
+
 var fetchResults = function (completion) {
     list.style.visibility = "hidden";
     errorView.style.display = 'none';
@@ -53,10 +67,13 @@ var fetchResults = function (completion) {
 
     const fastestTimeLabel = document.getElementById("fastest-time");
     const fastestPriceLabel = document.getElementById("fastest-price");
+    const fastestRouteLabel = document.getElementById("fastest-route");
     const bestTimeLabel = document.getElementById("best-time");
     const bestPriceLabel = document.getElementById("best-price");
+    const bestRouteLabel = document.getElementById("best-route");
     const cheapestTimeLabel = document.getElementById("cheapest-time");
     const cheapestPriceLabel = document.getElementById("cheapest-price");
+    const cheapestRouteLabel = document.getElementById("cheapest-route");
 
     if (customerId === "") {
         errorView.innerHTML = "No customer id provided"
@@ -85,6 +102,21 @@ var fetchResults = function (completion) {
         bestPriceLabel.innerHTML = e.best.price;
         cheapestTimeLabel.innerHTML = e.cheapest.time;
         cheapestPriceLabel.innerHTML = e.cheapest.price;
+
+        if (e.fastest.route) {
+            var text = convertArrayToString(e.fastest.route)
+            fastestRouteLabel.innerHTML = text;
+        }
+
+        if (e.best.route) {
+            var text = convertArrayToString(e.best.route)
+            bestRouteLabel.innerHTML = text;
+        }
+
+        if (e.cheapest.route) {
+            var text = convertArrayToString(e.cheapest.route)
+            cheapestRouteLabel.innerHTML = text;
+        }
 
         stopSpinner();
         list.style.visibility = "visible";
