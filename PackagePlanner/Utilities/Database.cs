@@ -43,11 +43,6 @@ namespace PackagePlanner.Utilities
             return connection;
         }
 
-        public List<string> GetCities()
-        {
-            var queryString = @"SELECT name FROM [dbo].[City]";
-            return ExecuteQuery<string>(queryString);
-        }
 
         public List<string> GetWeightCatagories()
         {
@@ -75,7 +70,7 @@ namespace PackagePlanner.Utilities
 
         public List<Models.City> GetCity()
         {
-            string queryString = @"SELECT Id, Name FROM [dbo].[Connection]";
+            string queryString = @"SELECT Id, Name FROM [dbo].[City]";
             return ExecuteQueryToObject<Models.City>(queryString);
         }
 

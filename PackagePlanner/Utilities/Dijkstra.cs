@@ -8,14 +8,14 @@ namespace PackagePlanner.Utilities
     public class Dijkstra
     {
 
-        public static List<string> DijkstraAlgorithm(WeightCalculator weightCalculator, List<string> cities, string sourceNode, string destinationNode)
+        public static List<string> DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode)
         {
             var n = cities.Count();
 
             var distance = new Dictionary<string, int>();
             for (int i = 0; i < n; i++)
             {
-                distance[cities[i]] = int.MaxValue;
+                distance[cities[i].Id] = int.MaxValue;
             }
 
             distance[sourceNode] = 0;
@@ -29,9 +29,9 @@ namespace PackagePlanner.Utilities
                 var minNode = 0;
                 for (int i = 0; i < n; i++)
                 {
-                    if (!used[i] && minDistance > distance[cities[i]])
+                    if (!used[i] && minDistance > distance[cities[i].Id])
                     {
-                        minDistance = distance[cities[i]];
+                        minDistance = distance[cities[i].Id];
                         minNode = i;
                     }
                 }
@@ -45,19 +45,23 @@ namespace PackagePlanner.Utilities
 
                 for (int i = 0; i < n; i++)
                 {
-                    Weight weight = weightCalculator.calc();
+                    Weight weight = weightCalculator.calc(cities[minNode].Id, cities[i].Id);
+                    if (cities[minNode].Id == cities[i].Id)
+                    {
+                        Console.WriteLine("");
+                    }
                     //if (graph[minNode, i] > 0)
                     if (weight.time > 0)
                     {
-                        var shortestToMinNode = distance[cities[minNode]];
+                        var shortestToMinNode = distance[cities[minNode].Id];
                         var distanceToNextNode = weight.time;
 
                         var totalDistance = shortestToMinNode + distanceToNextNode;
 
-                        if (totalDistance < distance[cities[i]])
+                        if (totalDistance < distance[cities[i].Id])
                         {
-                            distance[cities[i]] = totalDistance;
-                            previous[cities[i]] = cities[minNode];
+                            distance[cities[i].Id] = totalDistance;
+                            previous[cities[i].Id] = cities[minNode].Id;
                         }
                     }
                 }
@@ -70,7 +74,7 @@ namespace PackagePlanner.Utilities
 
             var path = new LinkedList<string>();
             string currentNode = destinationNode;
-            while (currentNode != null)
+            while (currentNode != null && currentNode != sourceNode)
             {
                 path.AddFirst(currentNode);
                 currentNode = previous[currentNode];

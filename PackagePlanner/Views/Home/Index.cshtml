@@ -26,9 +26,9 @@
             <div class="destination-selector">
                 <label class="destination-selector__label">To</label>
                 <select id="to-field" class="form-control">
-                    @foreach (var item in ViewBag.Cities)
+                    @foreach (PackagePlanner.Models.City city in ViewBag.Cities)
                     {
-                        <option>@item</option>
+                        <option>@city.Name</option>
                     }
                 </select>
             </div>
