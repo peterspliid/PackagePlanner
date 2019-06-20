@@ -8,14 +8,14 @@ namespace PackagePlanner.Utilities
 {
     public static class AlgorithmDijkstraAirOnly
     {
-        public static int GetTotalPrice()
+        public static double GetTotalPrice()
         {
             //ALL this can be replaced with new algorithm class
-            //replace with call to algorithm
+
             ApiRequestParams parameters = new ApiRequestParams();
             parameters.SetApiRequestParamsToDefault();
 
-            int totalPrice = APIHandling.GetPriceFromTelstarAPI(parameters.UpdateAndFormatDictionary());
+            double totalPrice = APIHandling.GetPriceFromOceanicAirlinesAPI(parameters.UpdateAndFormatDictionary());
             Console.Write("totalprice: " + totalPrice);
             return totalPrice;
         }

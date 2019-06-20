@@ -3,7 +3,7 @@
     public struct DeliveryData
     {
         public bool success;
-        public int price;
-        public int time;
+        public double price;
+        public double time;
     }
 }

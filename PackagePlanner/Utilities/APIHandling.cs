@@ -16,27 +16,27 @@ namespace PackagePlanner.Utilities
     {
         private static HttpClient client = new HttpClient();
 
-        public static int GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
+        public static double GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
         {
-            var url = "http://wa-oadk.azurewebsites.net/api?";
-            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
+            var url = "http://wa-oadk.azurewebsites.net/api/delivery?";
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
             return delivery.price;
         }
 
-        public static int GetPriceFromTelstarAPI(Dictionary<String, String> parameters)
+        public static double GetPriceFromTelstarAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-tldk.azurewebsites.net/api/GetTelstarRouteExternal?";
 
-            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
             return delivery.price;
         }
 
-        public static int GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
+        public static double GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
         {
-            var url = "http://wa-oadk.azurewebsites.net/api?";
-            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url);
+            var url = "http://wa-eitdk.azurewebsites.net/api/GetEITRoute?";
+            DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
             return delivery.price;
         }
@@ -63,7 +63,7 @@ namespace PackagePlanner.Utilities
 
                 if (response.IsSuccessStatusCode)  
                 {
-                    DeliveryApi delivery = response.Content.ReadAsAsync<DeliveryApi>().Result;  
+                    DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;  
                     Debug.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
                     Debug.WriteLine("URL: {0}", client.BaseAddress);
                 return delivery;

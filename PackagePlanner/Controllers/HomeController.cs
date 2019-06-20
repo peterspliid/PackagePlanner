@@ -13,7 +13,7 @@ namespace PackagePlanner.Controllers
             ViewBag.WeightCategories = Database.Instance.GetWeightCatagories();
             ViewBag.CargoTypes = Database.Instance.GetCargoTypes();
 
-            //ViewBag.Debug = AlgorithmDijkstraAirOnly.GetTotalPrice();
+            // ViewBag.Debug = AlgorithmDijkstraAirOnly.GetTotalPrice();
 
             return View();
         }
