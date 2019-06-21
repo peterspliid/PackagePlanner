@@ -68,6 +68,7 @@ namespace PackagePlanner.Utilities
                         DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;
                         Debug.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
                         Debug.WriteLine("URL: {0}", client.BaseAddress);
+                        return delivery;
                     }
                     catch (Exception e)
                     {

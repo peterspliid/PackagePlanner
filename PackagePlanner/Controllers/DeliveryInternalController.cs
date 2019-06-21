@@ -25,13 +25,14 @@ namespace PackagePlanner.Controllers
                 packageWidth = packageWidth.Value
             };
 
-            DeliveryData deliv = Utilities.ShortestPathCalculator.ShortestPathFlight(apiRequestParams, discount);
+            DeliveryData fastest = Utilities.ShortestPathCalculator.ShortestPath(apiRequestParams, discount, "time");
+            DeliveryData cheapest = Utilities.ShortestPathCalculator.ShortestPath(apiRequestParams, discount, "price");
 
             var delivery = new Delivery()
             {
-                best = deliv,
-                cheapest = deliv,
-                fastest = deliv
+                best = fastest,
+                cheapest = cheapest,
+                fastest = fastest
             };
 
             return delivery;

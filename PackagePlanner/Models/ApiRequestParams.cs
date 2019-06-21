@@ -65,6 +65,10 @@ namespace PackagePlanner.Models
 
         public Dictionary<string, string> UpdateAndFormatDictionary()
         {
+            if (paramsDictionary.ContainsKey("cargoType"))
+            {
+                return paramsDictionary;
+            }
             //typecast doubles to int to support external apis
             packageLength = (int) packageLength;
             packageHeight = (int)packageHeight;
