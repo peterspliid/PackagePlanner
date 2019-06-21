@@ -112,7 +112,7 @@ textarea {
     .results-list {
         flex-direction: column;
         border: none;
-        margin-top: 75px;
+        margin-top: 150px;
     }
 
     .main-logo {
