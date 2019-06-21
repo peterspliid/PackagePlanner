@@ -22,28 +22,60 @@ namespace PackagePlanner.Models
         {
             paramsDictionary = new Dictionary<string, string>();
         }
+        public void SetApiRequestParamsToDefaultEIT()
+        {
+            //Set default values
+            cargoType = "dsaf";
+            recorded = "false";
+            packageLength = 1;
+            packageWidth = 2;
+            packageHeight = 3;
+            packageWeight = 4;
+            fromDestination = "marrakesh";
+            toDestination = "amatave";
+        }
+
+        public void SetApiRequestParamsToDefaultTelstar()
+        {
+            //Set default values
+            cargoType = "dsaf";
+            recorded = "true";
+            packageLength = 1;
+            packageWidth = 2;
+            packageHeight = 3;
+            packageWeight = 4;
+            fromDestination = "marrakesh";
+            toDestination = "tanger";
+        }
+
         public void SetApiRequestParamsToDefault()
         {
             //Set default values
             cargoType = "dsaf";
             recorded = "false";
             packageLength = 1;
-            packageHeight = 60;
             packageWidth = 2;
+            packageHeight = 60;
             packageWeight = 6;
             fromDestination = "marrakesh";
             toDestination = "amatave";
         }
 
-        
+
         public Dictionary<string, string> UpdateAndFormatDictionary()
         {
+            //typecast doubles to int to support external apis
+            packageLength = (int) packageLength;
+            packageHeight = (int)packageHeight;
+            packageWidth = (int)packageWidth;
+            packageWeight = (int)packageWeight;
+
             paramsDictionary.Add("cargoType",cargoType);
             paramsDictionary.Add("recorded", recorded);
-            paramsDictionary.Add("packageLength", packageLength.ToString("0.00"));
-            paramsDictionary.Add("packageHeight", packageHeight.ToString("0.00"));
-            paramsDictionary.Add("packageWidth", packageWidth.ToString("0.00"));
-            paramsDictionary.Add("packageWeight", packageWeight.ToString("0.00"));
+            paramsDictionary.Add("packageLength", packageLength.ToString());
+            paramsDictionary.Add("packageHeight", packageHeight.ToString());
+            paramsDictionary.Add("packageWidth", packageWidth.ToString());
+            paramsDictionary.Add("packageWeight", packageWeight.ToString());
             paramsDictionary.Add("fromDestination", fromDestination);
             paramsDictionary.Add("toDestination", toDestination);
 

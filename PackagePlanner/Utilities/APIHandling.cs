@@ -16,29 +16,29 @@ namespace PackagePlanner.Utilities
     {
         private static HttpClient client = new HttpClient();
 
-        public static double GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
+        public static DeliveryData GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-oadk.azurewebsites.net/api/delivery?";
             DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
-            return delivery.price;
+            return delivery;
         }
 
-        public static double GetPriceFromTelstarAPI(Dictionary<String, String> parameters)
+        public static DeliveryData GetPriceFromTelstarAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-tldk.azurewebsites.net/api/GetTelstarRouteExternal?";
 
             DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
-            return delivery.price;
+            return delivery;
         }
 
-        public static double GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
+        public static DeliveryData GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-eitdk.azurewebsites.net/api/GetEITRoute?";
             DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
 
-            return delivery.price;
+            return delivery;
         }
 
         public static DeliveryData AsyncTaskCallWebApiAsync(string url, Dictionary<String, String> parameters)
@@ -56,10 +56,11 @@ namespace PackagePlanner.Utilities
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+
             // TODO: Add query to URL
 
             //GET Method
-            HttpResponseMessage response = client.GetAsync(query).Result;
+            HttpResponseMessage response = client.GetAsync(url).Result;
 
                 if (response.IsSuccessStatusCode)
                 {

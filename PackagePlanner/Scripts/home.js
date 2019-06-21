@@ -152,11 +152,11 @@ discountInput.onkeypress = function(e) {
     e.preventDefault();
 }
 
-function selectButtonClick() {
+function selectButtonClick(btn_price, btn_time) {
     var data = getData();
 
-    data['price'] = $('#fastest-price').text();
-    data['time'] = $('#fastest-time').text();
+    data['price'] = $('#' + btn_price).text();
+    data['time'] = $('#' + btn_time).text();
 
 
     $.ajax({
@@ -168,15 +168,15 @@ function selectButtonClick() {
 
 const selectBestButton = document.getElementById("select-best-button");
 selectBestButton.onclick = function (e) {
-    selectButtonClick();
+    selectButtonClick("best-price", "best-time");
 }
 
 const selectFastestButton = document.getElementById("select-fastest-button");
 selectFastestButton.onclick = function(e) {
-    selectButtonClick();
+    selectButtonClick("fastest-price", "fastest-time");
 }
 
 const selectCheapestButton = document.getElementById("select-cheapest-button");
 selectCheapestButton.onclick = function(e) {
-    selectButtonClick();
+    selectButtonClick("cheapest-price", "cheapest-time");
 }

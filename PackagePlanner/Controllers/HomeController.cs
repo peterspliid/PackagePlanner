@@ -18,7 +18,7 @@ namespace PackagePlanner.Controllers
             ViewBag.CargoTypes = Database.Instance.GetCargoTypes();
             ViewBag.Customers = Database.Instance.GetCustomers();
 
-            // ViewBag.Debug = AlgorithmDijkstraAirOnly.GetTotalPrice();
+            //ViewBag.Debug = AlgorithmDijkstraAirOnly.GetDeliveryData().price;
 
             return View();
         }
