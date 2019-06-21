@@ -25,16 +25,17 @@ namespace PackagePlanner.Models
         public void SetApiRequestParamsToDefault()
         {
             //Set default values
-            cargoType = "refr";
+            cargoType = "dsaf";
             recorded = "false";
-            packageLength = 50;
-            packageHeight = 50;
-            packageWidth = 50;
+            packageLength = 1;
+            packageHeight = 60;
+            packageWidth = 2;
             packageWeight = 6;
-            fromDestination = "stHelena";
-            toDestination = "hvalbugten";
+            fromDestination = "marrakesh";
+            toDestination = "amatave";
         }
 
+        
         public Dictionary<string, string> UpdateAndFormatDictionary()
         {
             paramsDictionary.Add("cargoType",cargoType);
