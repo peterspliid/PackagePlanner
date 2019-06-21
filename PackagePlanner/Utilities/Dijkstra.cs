@@ -8,7 +8,7 @@ namespace PackagePlanner.Utilities
     public class Dijkstra
     {
 
-        public static List<string> DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode)
+        public static List<string> DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode, string type, bool onlyFlight)
         {
             var n = cities.Count();
 
@@ -45,13 +45,9 @@ namespace PackagePlanner.Utilities
 
                 for (int i = 0; i < n; i++)
                 {
-                    Weight weight = weightCalculator.calc(cities[minNode].Id, cities[i].Id);
-                    if (cities[minNode].Id == cities[i].Id)
-                    {
-                        Console.WriteLine("");
-                    }
-                    //if (graph[minNode, i] > 0)
-                    if (weight.time > 0)
+                    Weight weight = weightCalculator.calc(cities[minNode].Id, cities[i].Id, type, onlyFlight);
+                    int w = type == "time" ? weight.time : weight.price;
+                    if (w > 0)
                     {
                         var shortestToMinNode = distance[cities[minNode].Id];
                         var distanceToNextNode = weight.time;

@@ -18,7 +18,7 @@ namespace PackagePlanner.Utilities
         private List<Models.Connection> connections;
         private List<Models.Connection> flightConnections;
         private Dictionary<string, Models.ConnectionData> connectionsData;
-        private static Dictionary<string, Weight> cachedWeights = new Dictionary<string, Weight>();
+        private static Dictionary<string, List<Weight>> cachedWeights = new Dictionary<string, List<Weight>>();
         public WeightCalculator(Models.ApiRequestParams p)
         {
             parameters = p;
@@ -39,22 +39,42 @@ namespace PackagePlanner.Utilities
                 }
             }
         }
-        public Weight calc(string from, string to)
+        public Weight calc(string from, string to, string type, bool onlyFlight = true)
         {
+            List<Weight> weights = new List<Weight>();
             string cacheString = $"{from}-{to}-{parameters.cargoType}-{parameters.packageWeight}-{parameters.packageLength}-{parameters.packageWidth}-{parameters.packageHeight}-{parameters.recorded}";
             if (cachedWeights.ContainsKey(cacheString))
             {
-                return cachedWeights[cacheString];
+                weights = cachedWeights[cacheString];
             }
-            Weight weight = new Weight
+            else
             {
-                price = connectionsData.ContainsKey($"{from}-{to}") ? 1 : 0,
-                time = connectionsData.ContainsKey($"{from}-{to}") ? 1 : 0,
-                carrier = "oa"
-            };
-            cachedWeights[cacheString] = weight;
-            return weight;
+                cachedWeights[cacheString] = new List<Weight>();
+                int price = PriceTimeCalc.calcPrice(parameters.packageWidth, parameters.packageHeight, parameters.packageLength, parameters.packageWeight);
+                Weight weightOA = new Weight
+                {
+                    price = connectionsData.ContainsKey($"{from}-{to}") ? price : 0,
+                    time = connectionsData.ContainsKey($"{from}-{to}") ? 8 : 0,
+                    carrier = "oa"
+                };
+                cachedWeights[cacheString].Add(weightOA);
+                if (!onlyFlight)
+                {
 
+                }
+            }
+            int bestWeight = type == "price" ? weights[0].price : weights[0].time;
+            int bestIndex = 0;
+            for (int i = 1; i < weights.Count; i++)
+            {
+                int w = type == "price" ? weights[i].price : weights[i].time;
+                if (w < bestWeight)
+                {
+                    bestWeight = w;
+                    bestIndex = i;
+                }
+            }
+            return weights[bestIndex];
         }
     }
 }
