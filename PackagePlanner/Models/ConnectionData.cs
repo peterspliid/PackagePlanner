@@ -8,6 +8,6 @@ namespace PackagePlanner.Models
     public class ConnectionData
     {
         public int Weight { get; set; }
-        public string Type { get; set; }
+        public HashSet<string> Type { get; set; }
     }
 }

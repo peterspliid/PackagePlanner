@@ -5,10 +5,14 @@ using System.Web;
 
 namespace PackagePlanner.Utilities
 {
+    public class PathWithWeights
+    {
+        public List<string> path { get; set; }
+        public List<Weight> weigths { get; set; }
+    }
     public class Dijkstra
     {
-
-        public static List<string> DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode, string type, bool onlyFlight)
+        public static PathWithWeights DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode, string type, bool onlyFlight)
         {
             var n = cities.Count();
 
@@ -22,6 +26,7 @@ namespace PackagePlanner.Utilities
 
             var used = new bool[n];
             var previous = new Dictionary<string, string>();
+            var weights = new Dictionary<string, Weight>();
 
             while (true)
             {
@@ -58,6 +63,7 @@ namespace PackagePlanner.Utilities
                         {
                             distance[cities[i].Id] = totalDistance;
                             previous[cities[i].Id] = cities[minNode].Id;
+                            weights[cities[i].Id] = weight;
                         }
                     }
                 }
@@ -69,14 +75,26 @@ namespace PackagePlanner.Utilities
             }
 
             var path = new LinkedList<string>();
+            var pathWeights = new LinkedList<Weight>();
             string currentNode = destinationNode;
             while (currentNode != null && currentNode != sourceNode)
             {
                 path.AddFirst(currentNode);
                 currentNode = previous[currentNode];
+                if (currentNode != sourceNode)
+                {
+                    pathWeights.AddFirst(weights[currentNode]);
+                } else
+                {
+                    pathWeights.AddFirst(weights[destinationNode]);
+                }
             }
 
-            return path.ToList();
+            return new PathWithWeights()
+            {
+                path = path.ToList(),
+                weigths = pathWeights.ToList()
+            };
         }
 
     }
