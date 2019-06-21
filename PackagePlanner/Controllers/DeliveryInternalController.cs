@@ -7,34 +7,41 @@ namespace PackagePlanner.Controllers
 {
     public class DeliveryInternalController : ApiController
     {
-        public Delivery Get()
+        public Delivery Get(string fromDestination, string toDestination, int packageWeight, string cargoType, string recorded, int packageLength, int packageWidth, int packageHeight)
         {
+            ApiRequestParams apiRequestParams = new ApiRequestParams()
+            {
+                fromDestination = fromDestination,
+                toDestination = toDestination,
+                packageWeight = packageWeight,
+                cargoType = cargoType,
+                recorded = recorded,
+                packageHeight = packageHeight,
+                packageLength = packageLength,
+                packageWidth = packageWidth
+            };
+
+            DeliveryData deliv = Utilities.ShortestPathCalculator.ShortestPathFlight(apiRequestParams);
+
             var delivery = new Delivery()
             {
-                best = new Models.DeliveryData()
-                {
-                    price = 100,
-                    time = 2,
-                    success = true,
-                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere"}
-                },
-                cheapest = new Models.DeliveryData()
-                {
-                    price = 15,
-                    time = 4,
-                    success = true,
-                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere" }
-                },
-                fastest = new Models.DeliveryData()
-                {
-                    price = 100,
-                    time = 2,
-                    success = true,
-                    route = new List<string>() { "Darfur", "Tripoli", "Somewhere" }
-                }
+                best = deliv,
+                cheapest = deliv,
+                fastest = deliv
             };
 
             return delivery;
+        }
+
+        public Delivery Get()
+        {
+            DeliveryData deliv = new DeliveryData() { success = false };
+            return new Delivery()
+            {
+                best = deliv,
+                cheapest = deliv,
+                fastest = deliv
+            };
         }
     }
 }

@@ -63,8 +63,6 @@ var fetchResults = function (completion) {
     const weight = weightField.value;
     const customerId = customerIdInput.value;
 
-    console.log(`From: ${from}, To: ${to}, Weight: ${weight}, customerId: ${customerId}`);
-
     const fastestTimeLabel = document.getElementById("fastest-time");
     const fastestPriceLabel = document.getElementById("fastest-price");
     const fastestRouteLabel = document.getElementById("fastest-route");
@@ -84,42 +82,52 @@ var fetchResults = function (completion) {
     }
 
     var data = {
-        "from": from,
-        "to": to,
-        "weight": weight,
+        "fromDestination": from,
+        "toDestination": to,
+        "packageWeight": weight,
         "customerId": customerId,
-        "lenght": lengthField.value,
-        "height": heightField.value,
-        "width": widthField.value,
+        "packageLength": lengthField.value,
+        "packageHeight": heightField.value,
+        "packageWidth": widthField.value,
         "discount": discountField.value,
-        "type": typeField.value
-    }
+        "cargoType": typeField.value,
+        "recorded": "false"
+    };
 
-    makeRequest('api/delivery', data, function (e) {
+    makeRequest('api/deliveryInternal', data, function (e) {
         fastestTimeLabel.innerHTML = e.fastest.time;
         fastestPriceLabel.innerHTML = e.fastest.price;
         bestTimeLabel.innerHTML = e.best.time;
         bestPriceLabel.innerHTML = e.best.price;
         cheapestTimeLabel.innerHTML = e.cheapest.time;
         cheapestPriceLabel.innerHTML = e.cheapest.price;
+        var route = e.fastest.route;
+        route = [data.fromDestination].concat(route)
+        $("#error-view div").text();
 
-        if (e.fastest.route) {
-            var text = convertArrayToString(e.fastest.route)
-            fastestRouteLabel.innerHTML = text;
-        }
+        if (e.fastest.success) {
+            if (e.fastest.route) {
+                var text = convertArrayToString(route)
+                fastestRouteLabel.innerHTML = text;
+            }
 
-        if (e.best.route) {
-            var text = convertArrayToString(e.best.route)
-            bestRouteLabel.innerHTML = text;
-        }
+            if (e.best.route) {
+                var text = convertArrayToString(route)
+                bestRouteLabel.innerHTML = text;
+            }
 
-        if (e.cheapest.route) {
-            var text = convertArrayToString(e.cheapest.route)
-            cheapestRouteLabel.innerHTML = text;
+            if (e.cheapest.route) {
+                var text = convertArrayToString(route)
+                cheapestRouteLabel.innerHTML = text;
+            }
+            list.style.visibility = "visible";
+
+        } else {
+            list.style.visibility = "hidden";
+            $("#error-view div").text("No routes found");
         }
 
         stopSpinner();
-        list.style.visibility = "visible";
         isFetchingResults = false;
     });
 }

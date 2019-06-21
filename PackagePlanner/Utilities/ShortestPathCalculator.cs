@@ -13,31 +13,30 @@ namespace PackagePlanner.Utilities
         public static Dictionary<string, Models.ConnectionData> oaConnectionsData;
         static ShortestPathCalculator()
         {
-            //connections = Database.Instance.GetConnections();
-            //flightConnections = connections.Where(cn => cn.ConnectionType == "oa").ToList();
             cities = Database.Instance.GetCity();
-            //oaConnectionsData = new Dictionary<string, Models.ConnectionData>();
-
-            //foreach(Models.Connection con in connections)
-            //{
-            //    if (con.ConnectionType == "oa")
-            //    {
-            //        Models.ConnectionData conData = new Models.ConnectionData
-            //        {
-            //            Weight = 1,
-            //            Type = "oa"
-            //        };
-            //        oaConnectionsData[($"{con.Place1}-{con.Place2}")] = conData;
-            //        oaConnectionsData[($"{con.Place2}-{con.Place1}")] = conData;
-            //    }
-            //}
-
-
         }
-        public static List<string> ShortestPathFlight(Utilities.WeightCalculator weightCalculator, string from, string to)
+        public static Models.DeliveryData ShortestPathFlight(Models.ApiRequestParams apiRequestParams)
         {
-            List<string> path = Dijkstra.DijkstraAlgorithm(weightCalculator, cities, from, to);
-            return path;
+            WeightCalculator wc = new WeightCalculator(apiRequestParams);
+            List<string> path = Dijkstra.DijkstraAlgorithm(wc, cities, apiRequestParams.fromDestination, apiRequestParams.toDestination);
+            if (apiRequestParams.packageHeight > 200 || apiRequestParams.packageLength > 200 || apiRequestParams.packageWidth > 200 || apiRequestParams.packageWeight > 20 || apiRequestParams.recorded == "true" || path.Count == 0 || (apiRequestParams.cargoType != "refr" && apiRequestParams.cargoType != "weap" && apiRequestParams.cargoType != "std"))
+            {
+                return new Models.DeliveryData()
+                {
+                    success = false
+                };
+            }
+            int pricePerSegment = PriceTimeCalc.calcPrice(apiRequestParams.packageWidth, apiRequestParams.packageHeight, apiRequestParams.packageLength, apiRequestParams.packageWeight);
+            int price = path.Count * pricePerSegment;
+            var deliveryData = new Models.DeliveryData()
+            {
+                price = price,
+                route = path,
+                success = true,
+                time = 8 * path.Count
+            };
+
+            return deliveryData;
         }
     }
 }

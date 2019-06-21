@@ -1,11 +1,4 @@
-﻿@{
-    var types = new List<string>();
-    types.Add("Weapon");
-    types.Add("Animals");
-    ViewBag.Types = types;
-}
-
-<h1 class="title">@ViewBag.Title</h1>
+﻿<h1 class="title">@ViewBag.Title</h1>
 
 <h1 class="title">@ViewBag.Debug</h1>
 <h1 class="title">@ViewBag.Debug2</h1>
@@ -16,9 +9,9 @@
             <div class="destination-selector">
                 <label class="destination-selector__label">From</label>
                 <select id="from-field" class="form-control">
-                    @foreach (var item in ViewBag.Cities)
+                    @foreach (PackagePlanner.Models.City city in ViewBag.Cities)
                     {
-                        <option>@item</option>
+                        <option value="@city.Id">@city.Name</option>
                     }
                 </select>
             </div>
@@ -28,7 +21,7 @@
                 <select id="to-field" class="form-control">
                     @foreach (PackagePlanner.Models.City city in ViewBag.Cities)
                     {
-                        <option>@city.Name</option>
+                        <option value="@city.Id">@city.Name</option>
                     }
                 </select>
             </div>
@@ -40,9 +33,9 @@
             <div class="destination-selector">
                 <label class="destination-selector__label">Type</label>
                 <select id="type-field" class="form-control">
-                    @foreach (var item in ViewBag.CargoTypes)
+                    @foreach (PackagePlanner.Models.CargoType cargoType in ViewBag.CargoTypes)
                     {
-                        <option>@item</option>
+                        <option value="@cargoType.Id">@cargoType.Name</option>
                     }
                 </select>
             </div>
@@ -60,9 +53,9 @@
                 <div class="destination-selector">
                     <label class="destination-selector__label">Customer ID</label>
                     <select id="customerId-input" class="form-control">
-                        @foreach (var item in ViewBag.Customers)
+                        @foreach (PackagePlanner.Models.Customer customer in ViewBag.Customers)
                         {
-                            <option value="@item">@item</option>
+                            <option value="@customer.id">@customer.Name</option>
                         }
                     </select>
                 </div>
