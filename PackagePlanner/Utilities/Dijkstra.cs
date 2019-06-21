@@ -5,10 +5,14 @@ using System.Web;
 
 namespace PackagePlanner.Utilities
 {
+    public class PathWithWeights
+    {
+        public List<string> path { get; set; }
+        public List<Weight> weigths { get; set; }
+    }
     public class Dijkstra
     {
-
-        public static List<string> DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode)
+        public static PathWithWeights DijkstraAlgorithm(WeightCalculator weightCalculator, List<Models.City> cities, string sourceNode, string destinationNode, string type, bool onlyFlight)
         {
             var n = cities.Count();
 
@@ -22,6 +26,7 @@ namespace PackagePlanner.Utilities
 
             var used = new bool[n];
             var previous = new Dictionary<string, string>();
+            var weights = new Dictionary<string, Weight>();
 
             while (true)
             {
@@ -45,13 +50,14 @@ namespace PackagePlanner.Utilities
 
                 for (int i = 0; i < n; i++)
                 {
-                    Weight weight = weightCalculator.calc(cities[minNode].Id, cities[i].Id);
-                    if (cities[minNode].Id == cities[i].Id)
+                    if (cities[minNode].Id == "tanger" && cities[i].Id == "deKanariskeOer")
                     {
-                        Console.WriteLine("");
+                        Console.Write("as");
                     }
-                    //if (graph[minNode, i] > 0)
-                    if (weight.time > 0)
+                    Weight weight = weightCalculator.calc(cities[minNode].Id, cities[i].Id, type, onlyFlight);
+                    
+                    int w = type == "time" ? weight.time : weight.price;
+                    if (w > 0)
                     {
                         var shortestToMinNode = distance[cities[minNode].Id];
                         var distanceToNextNode = weight.time;
@@ -62,6 +68,7 @@ namespace PackagePlanner.Utilities
                         {
                             distance[cities[i].Id] = totalDistance;
                             previous[cities[i].Id] = cities[minNode].Id;
+                            weights[cities[i].Id] = weight;
                         }
                     }
                 }
@@ -73,14 +80,26 @@ namespace PackagePlanner.Utilities
             }
 
             var path = new LinkedList<string>();
+            var pathWeights = new LinkedList<Weight>();
             string currentNode = destinationNode;
             while (currentNode != null && currentNode != sourceNode)
             {
                 path.AddFirst(currentNode);
                 currentNode = previous[currentNode];
+                if (currentNode != sourceNode)
+                {
+                    pathWeights.AddFirst(weights[currentNode]);
+                } else
+                {
+                    pathWeights.AddFirst(weights[destinationNode]);
+                }
             }
 
-            return path.ToList();
+            return new PathWithWeights()
+            {
+                path = path.ToList(),
+                weigths = pathWeights.ToList()
+            };
         }
 
     }

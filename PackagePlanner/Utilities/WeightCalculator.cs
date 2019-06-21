@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PackagePlanner.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,45 +17,88 @@ namespace PackagePlanner.Utilities
         private Models.ApiRequestParams parameters { get; set; }
 
         private List<Models.Connection> connections;
-        private List<Models.Connection> flightConnections;
         private Dictionary<string, Models.ConnectionData> connectionsData;
-        private static Dictionary<string, Weight> cachedWeights = new Dictionary<string, Weight>();
+        private static Dictionary<string, List<Weight>> cachedWeights = new Dictionary<string, List<Weight>>();
         public WeightCalculator(Models.ApiRequestParams p)
         {
             parameters = p;
             connections = Database.Instance.GetConnections();
-            flightConnections = connections.Where(cn => cn.ConnectionType == "oa").ToList();
             connectionsData = new Dictionary<string, Models.ConnectionData>();
             foreach (Models.Connection con in connections)
             {
-                if (con.ConnectionType == "oa")
+                if (!connectionsData.ContainsKey($"{con.Place1}-{con.Place2}"))
                 {
                     Models.ConnectionData conData = new Models.ConnectionData
                     {
                         Weight = 1,
-                        Type = "oa"
+                        Type = new HashSet<string>() 
                     };
+                    conData.Type.Add(con.ConnectionType);
                     connectionsData[($"{con.Place1}-{con.Place2}")] = conData;
                     connectionsData[($"{con.Place2}-{con.Place1}")] = conData;
+                } else
+                {
+                    connectionsData[($"{con.Place1}-{con.Place2}")].Type.Add(con.ConnectionType);
+                    connectionsData[($"{con.Place2}-{con.Place1}")].Type.Add(con.ConnectionType);
                 }
             }
         }
-        public Weight calc(string from, string to)
+        public Weight calc(string from, string to, string type, bool onlyFlight = true)
         {
+            List<Weight> weights = new List<Weight>();
             string cacheString = $"{from}-{to}-{parameters.cargoType}-{parameters.packageWeight}-{parameters.packageLength}-{parameters.packageWidth}-{parameters.packageHeight}-{parameters.recorded}";
             if (cachedWeights.ContainsKey(cacheString))
             {
-                return cachedWeights[cacheString];
+                weights = cachedWeights[cacheString];
             }
-            Weight weight = new Weight
+            else
             {
-                price = connectionsData.ContainsKey($"{from}-{to}") ? 1 : 0,
-                time = connectionsData.ContainsKey($"{from}-{to}") ? 1 : 0,
-                carrier = "oa"
-            };
-            cachedWeights[cacheString] = weight;
-            return weight;
-
+                cachedWeights[cacheString] = new List<Weight>();
+                int price = PriceTimeCalc.calcPrice(parameters.packageWidth, parameters.packageHeight, parameters.packageLength, parameters.packageWeight);
+                bool hasConnection = connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("oa");
+                Weight weightOA = new Weight
+                {
+                    price = hasConnection ? price : 0,
+                    time = hasConnection ? 8 : 0,
+                    carrier = "oa"
+                };
+                cachedWeights[cacheString].Add(weightOA);
+                if (!onlyFlight)
+                {
+                    if (connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("tsl"))
+                    {
+                        DeliveryData delivery = APIHandling.GetApiDeliveryDataFromTelstarAPI(parameters.UpdateAndFormatDictionary());
+                        cachedWeights[cacheString].Add(new Weight()
+                        {
+                            time = (int)delivery.time,
+                            price = (int)delivery.price,
+                            carrier = "tsl"
+                        });
+                    } if (connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("eit"))
+                    {
+                        DeliveryData delivery = APIHandling.GetApiDeliveryDataFromEITcompanyAPI(parameters.UpdateAndFormatDictionary());
+                        cachedWeights[cacheString].Add(new Weight()
+                        {
+                            time = (int)delivery.time,
+                            price = (int)delivery.price,
+                            carrier = "eit"
+                        });
+                    }
+                }
+            }
+            weights = cachedWeights[cacheString];
+            int bestWeight = type == "price" ? weights[0].price : weights[0].time;
+            int bestIndex = 0;
+            for (int i = 1; i < weights.Count; i++)
+            {
+                int w = type == "price" ? weights[i].price : weights[i].time;
+                if (w < bestWeight || bestWeight == 0)
+                {
+                    bestWeight = w;
+                    bestIndex = i;
+                }
+            }
+            return weights[bestIndex];
         }
     }
 }

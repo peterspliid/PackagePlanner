@@ -17,8 +17,6 @@ namespace PackagePlanner.Controllers
             ViewBag.WeightCategories = weigthClasses;
             ViewBag.CargoTypes = Database.Instance.GetCargoTypes();
             ViewBag.Customers = Database.Instance.GetCustomers();
-
-
             return View();
         }
     }

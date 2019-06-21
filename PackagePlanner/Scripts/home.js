@@ -96,31 +96,32 @@ var fetchResults = function (completion) {
     const cheapestRouteLabel = document.getElementById("cheapest-route");
 
     makeRequest('api/deliveryInternal', getData(), function (e) {
-        fastestTimeLabel.innerHTML = e.fastest.time;
-        fastestPriceLabel.innerHTML = e.fastest.price;
-        bestTimeLabel.innerHTML = e.best.time;
-        bestPriceLabel.innerHTML = e.best.price;
-        cheapestTimeLabel.innerHTML = e.cheapest.time;
-        cheapestPriceLabel.innerHTML = e.cheapest.price;
-        var route = e.fastest.route;
-        route = [getData().fromDestination].concat(route)
-        $("#error-view p").text("");
-
-
         if (e.fastest.success) {
+            $("#error-view p").text("");
             list.style.visibility = "visible";
+            fastestTimeLabel.innerHTML = e.fastest.time;
+            fastestPriceLabel.innerHTML = e.fastest.price;
+            bestTimeLabel.innerHTML = e.best.time;
+            bestPriceLabel.innerHTML = e.best.price;
+            cheapestTimeLabel.innerHTML = e.cheapest.time;
+            cheapestPriceLabel.innerHTML = e.cheapest.price;
+            var fastestroute = e.fastest.route;
+            var cheapesttroute = e.cheapest.route;
+            fastestroute = [getData().fromDestination].concat(fastestroute)
+            cheapesttroute = [getData().fromDestination].concat(cheapesttroute)
+
             if (e.fastest.route) {
-                var text = convertArrayToString(route)
+                var text = convertArrayToString(fastestroute)
                 fastestRouteLabel.innerHTML = text;
             }
 
             if (e.best.route) {
-                var text = convertArrayToString(route)
+                var text = convertArrayToString(fastestroute)
                 bestRouteLabel.innerHTML = text;
             }
 
             if (e.cheapest.route) {
-                var text = convertArrayToString(route)
+                var text = convertArrayToString(cheapesttroute)
                 cheapestRouteLabel.innerHTML = text;
             }
         } else {
