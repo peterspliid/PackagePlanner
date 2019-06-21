@@ -50,7 +50,7 @@ namespace PackagePlanner.Utilities
 
                 for (int i = 0; i < n; i++)
                 {
-                    if (cities[minNode].Id == "tanger" && cities[i].Id == "deKanariskeOer")
+                    if (cities[minNode].Id == "cairo" && cities[i].Id == "suakin")
                     {
                         Console.Write("as");
                     }
@@ -60,7 +60,7 @@ namespace PackagePlanner.Utilities
                     if (w > 0)
                     {
                         var shortestToMinNode = distance[cities[minNode].Id];
-                        var distanceToNextNode = weight.time;
+                        var distanceToNextNode = w;
 
                         var totalDistance = shortestToMinNode + distanceToNextNode;
 

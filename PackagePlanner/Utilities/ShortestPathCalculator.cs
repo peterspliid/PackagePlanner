@@ -20,7 +20,7 @@ namespace PackagePlanner.Utilities
             WeightCalculator wc = new WeightCalculator(apiRequestParams);
             PathWithWeights pathWithWeights = Dijkstra.DijkstraAlgorithm(wc, cities, apiRequestParams.fromDestination, apiRequestParams.toDestination, "time", true);
             List<string> path = pathWithWeights.path;
-            if (apiRequestParams.packageHeight > 200 || apiRequestParams.packageLength > 200 || apiRequestParams.packageWidth > 200 || apiRequestParams.packageWeight > 20 || apiRequestParams.recorded == "true" || path == null || (apiRequestParams.cargoType != "refr" && apiRequestParams.cargoType != "weap" && apiRequestParams.cargoType != "std"))
+            if (path == null || CantFly(apiRequestParams))
             {
                 return new Models.DeliveryData()
                 {
@@ -75,6 +75,11 @@ namespace PackagePlanner.Utilities
                 success = true,
                 time = time
             };
+        }
+
+        public static bool CantFly(Models.ApiRequestParams apiRequestParams)
+        {
+            return apiRequestParams.packageHeight > 200 || apiRequestParams.packageLength > 200 || apiRequestParams.packageWidth > 200 || apiRequestParams.packageWeight > 20 || apiRequestParams.recorded == "true" || (apiRequestParams.cargoType != "refr" && apiRequestParams.cargoType != "weap" && apiRequestParams.cargoType != "std");
         }
     }
 }

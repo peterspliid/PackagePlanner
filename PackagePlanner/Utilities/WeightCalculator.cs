@@ -55,7 +55,7 @@ namespace PackagePlanner.Utilities
             {
                 cachedWeights[cacheString] = new List<Weight>();
                 int price = PriceTimeCalc.calcPrice(parameters.packageWidth, parameters.packageHeight, parameters.packageLength, parameters.packageWeight);
-                bool hasConnection = connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("oa");
+                bool hasConnection = connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("oa") && !ShortestPathCalculator.CantFly(parameters);
                 Weight weightOA = new Weight
                 {
                     price = hasConnection ? price : 0,
