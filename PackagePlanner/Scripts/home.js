@@ -19,12 +19,24 @@ const discountField = document.getElementById("discount-input");
 
 var isFetchingResults = false;
 
-const makeRequest = function(endpoint, data, completion) {
+const makeRequest = function (endpoint, data, completion, errorHandling) {
+    isFetchingResults = true;
     $.ajax({
         url: endpoint,
         dataType: 'json',
         data: data,
+        error: function(e) {
+            isFetchingResults = false;
+            errorHandling(e);
+        },
+        statusCode: {
+            500: function (e) {
+                isFetchingResults = false;
+                errorHandling(e);
+            }
+        },
         success: function (data) {
+            isFetchingResults = false;
             completion(data);
         }
     });
@@ -55,7 +67,6 @@ var convertArrayToString = function(array) {
 var fetchResults = function (completion) {
     list.style.visibility = "hidden";
     errorView.style.display = 'none';
-    isFetchingResults = true;
     startSpinner();
 
     const from = fromField.value;
@@ -77,7 +88,13 @@ var fetchResults = function (completion) {
         errorView.innerHTML = "No customer id provided"
         errorView.style.display = 'block';
         stopSpinner();
-        isFetchingResults = false;
+        return;
+    }
+
+    if (weight === "") {
+        errorView.innerHTML = "No weight provided"
+        errorView.style.display = 'block';
+        stopSpinner();
         return;
     }
 
@@ -103,32 +120,37 @@ var fetchResults = function (completion) {
         cheapestPriceLabel.innerHTML = e.cheapest.price;
         var route = e.fastest.route;
         route = [data.fromDestination].concat(route)
-        $("#error-view div").text();
 
-        if (e.fastest.success) {
-            if (e.fastest.route) {
-                var text = convertArrayToString(route)
-                fastestRouteLabel.innerHTML = text;
-            }
-
-            if (e.best.route) {
-                var text = convertArrayToString(route)
-                bestRouteLabel.innerHTML = text;
-            }
-
-            if (e.cheapest.route) {
-                var text = convertArrayToString(route)
-                cheapestRouteLabel.innerHTML = text;
-            }
-            list.style.visibility = "visible";
-
-        } else {
-            list.style.visibility = "hidden";
-            $("#error-view div").text("No routes found");
+        if (e.fastest.route) {
+            var text = convertArrayToString(route)
+            fastestRouteLabel.innerHTML = text;
         }
 
+        if (e.best.route) {
+            var text = convertArrayToString(route)
+            bestRouteLabel.innerHTML = text;
+        }
+
+        if (e.cheapest.route) {
+            var text = convertArrayToString(route)
+            cheapestRouteLabel.innerHTML = text;
+        }
+
+        if (e.fastest.success) {
+            list.style.visibility = "visible";
+            errorView.style.display = 'none';
+        } else {
+            list.style.visibility = "hidden";
+            errorView.innerHTML = "No routes found"
+            errorView.style.display = 'block';
+        }
+        
         stopSpinner();
-        isFetchingResults = false;
+    }, function (e) {
+        stopSpinner();
+        list.style.visibility = "hidden";
+        errorView.innerHTML = "Server could not complete the request."
+        errorView.style.display = 'block';
     });
 }
 
