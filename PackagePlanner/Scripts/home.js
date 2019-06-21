@@ -16,12 +16,24 @@ const discountField = document.getElementById("discount-input");
 
 var isFetchingResults = false;
 
-const makeRequest = function(endpoint, data, completion) {
+const makeRequest = function (endpoint, data, completion, errorHandling) {
+    isFetchingResults = true;
     $.ajax({
         url: endpoint,
         dataType: 'json',
         data: data,
+        error: function(e) {
+            isFetchingResults = false;
+            errorHandling(e);
+        },
+        statusCode: {
+            500: function (e) {
+                isFetchingResults = false;
+                errorHandling(e);
+            }
+        },
         success: function (data) {
+            isFetchingResults = false;
             completion(data);
         }
     });
@@ -54,7 +66,6 @@ var getData = function () {
     const to = toField.value;
     const weight = weightField.value;
     const customerId = customerIdInput.value;
-
     return {
         "fromDestination": from,
         "toDestination": to,
@@ -95,7 +106,9 @@ var fetchResults = function (completion) {
         route = [getData().fromDestination].concat(route)
         $("#error-view p").text("");
 
+
         if (e.fastest.success) {
+            list.style.visibility = "visible";
             if (e.fastest.route) {
                 var text = convertArrayToString(route)
                 fastestRouteLabel.innerHTML = text;
@@ -110,15 +123,17 @@ var fetchResults = function (completion) {
                 var text = convertArrayToString(route)
                 cheapestRouteLabel.innerHTML = text;
             }
-            list.style.visibility = "visible";
-
         } else {
             list.style.visibility = "hidden";
             $("#error-view p").text("No routes found");
         }
-
+        
         stopSpinner();
-        isFetchingResults = false;
+    }, function (e) {
+        stopSpinner();
+        list.style.visibility = "hidden";
+        errorView.innerHTML = "Server could not complete the request."
+        errorView.style.display = 'block';
     });
 }
 
@@ -147,7 +162,7 @@ function selectButtonClick() {
     $.ajax({
         url: "/api/select",
         data: data,
-        success: () => console.log("success")
+        success: () => window.alert("The route has been saved to the database")
     });
 }
 
