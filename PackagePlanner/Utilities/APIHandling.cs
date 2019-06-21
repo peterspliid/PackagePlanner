@@ -66,6 +66,7 @@ namespace PackagePlanner.Utilities
                     try
                     {
                         DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;
+                        return delivery;
                     }
                     catch (Exception e)
                     {
