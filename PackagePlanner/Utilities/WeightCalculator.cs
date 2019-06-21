@@ -67,7 +67,7 @@ namespace PackagePlanner.Utilities
                 {
                     if (connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("tsl"))
                     {
-                        DeliveryData delivery = APIHandling.GetPriceFromTelstarAPI(parameters.UpdateAndFormatDictionary());
+                        DeliveryData delivery = APIHandling.GetApiDeliveryDataFromTelstarAPI(parameters.UpdateAndFormatDictionary());
                         cachedWeights[cacheString].Add(new Weight()
                         {
                             time = (int)delivery.time,
@@ -76,7 +76,7 @@ namespace PackagePlanner.Utilities
                         });
                     } if (connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("eit"))
                     {
-                        DeliveryData delivery = APIHandling.GetPriceFromEITcompanyAPI(parameters.UpdateAndFormatDictionary());
+                        DeliveryData delivery = APIHandling.GetApiDeliveryDataFromEITcompanyAPI(parameters.UpdateAndFormatDictionary());
                         cachedWeights[cacheString].Add(new Weight()
                         {
                             time = (int)delivery.time,

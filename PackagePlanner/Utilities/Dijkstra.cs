@@ -50,7 +50,7 @@ namespace PackagePlanner.Utilities
 
                 for (int i = 0; i < n; i++)
                 {
-                    if (cities[minNode].Id == "tanger" && cities[i].Id == "sahara")
+                    if (cities[minNode].Id == "tanger" && cities[i].Id == "deKanariskeOer")
                     {
                         Console.Write("as");
                     }
