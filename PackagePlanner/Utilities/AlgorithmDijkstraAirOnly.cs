@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using PackagePlanner.Models;
 
@@ -13,9 +14,11 @@ namespace PackagePlanner.Utilities
             //ALL this can be replaced with new algorithm class
 
             ApiRequestParams parameters = new ApiRequestParams();
-            parameters.SetApiRequestParamsToDefaultTelstar();
+            parameters.SetApiRequestParamsToDefaultEIT();
 
-            DeliveryData delivery = APIHandling.GetPriceFromTelstarAPI(parameters.UpdateAndFormatDictionary());
+            parameters.cargoType = "rsaf";
+
+            DeliveryData delivery = APIHandling.GetApiDeliveryDataFromEITcompanyAPI(parameters.UpdateAndFormatDictionary());
 
             Console.Write("totalprice: " + delivery.price);
 

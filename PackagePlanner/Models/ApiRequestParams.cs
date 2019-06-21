@@ -22,18 +22,6 @@ namespace PackagePlanner.Models
         {
             paramsDictionary = new Dictionary<string, string>();
         }
-        public void SetApiRequestParamsToDefaultEIT()
-        {
-            //Set default values
-            cargoType = "dsaf";
-            recorded = "false";
-            packageLength = 1;
-            packageWidth = 2;
-            packageHeight = 3;
-            packageWeight = 4;
-            fromDestination = "marrakesh";
-            toDestination = "amatave";
-        }
 
         public void SetApiRequestParamsToDefaultTelstar()
         {
@@ -46,6 +34,19 @@ namespace PackagePlanner.Models
             packageWeight = 4;
             fromDestination = "marrakesh";
             toDestination = "tanger";
+        }
+
+        public void SetApiRequestParamsToDefaultEIT()
+        {
+            //Set default values
+            cargoType = "std";
+            recorded = "false";
+            packageLength = 1;
+            packageWidth = 2;
+            packageHeight = 3;
+            packageWeight = 4;
+            fromDestination = "dakar";
+            toDestination = "deKanariskeOer";
         }
 
         public void SetApiRequestParamsToDefault()

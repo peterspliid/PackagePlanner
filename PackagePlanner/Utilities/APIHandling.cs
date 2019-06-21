@@ -8,7 +8,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using PackagePlanner.Models;
-using Newtonsoft.Json;
 
 namespace PackagePlanner.Utilities
 {
@@ -16,7 +15,7 @@ namespace PackagePlanner.Utilities
     {
         private static HttpClient client = new HttpClient();
 
-        public static DeliveryData GetPriceFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
+        public static DeliveryData GetApiDeliveryDataFromOceanicAirlinesAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-oadk.azurewebsites.net/api/delivery?";
             DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
@@ -24,7 +23,7 @@ namespace PackagePlanner.Utilities
             return delivery;
         }
 
-        public static DeliveryData GetPriceFromTelstarAPI(Dictionary<String, String> parameters)
+        public static DeliveryData GetApiDeliveryDataFromTelstarAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-tldk.azurewebsites.net/api/GetTelstarRouteExternal?";
 
@@ -33,7 +32,7 @@ namespace PackagePlanner.Utilities
             return delivery;
         }
 
-        public static DeliveryData GetPriceFromEITcompanyAPI(Dictionary<String, String> parameters)
+        public static DeliveryData GetApiDeliveryDataFromEITcompanyAPI(Dictionary<String, String> parameters)
         {
             var url = "http://wa-eitdk.azurewebsites.net/api/GetEITRoute?";
             DeliveryData delivery = APIHandling.AsyncTaskCallWebApiAsync(url, parameters);
@@ -64,10 +63,16 @@ namespace PackagePlanner.Utilities
 
                 if (response.IsSuccessStatusCode)
                 {
-                    DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;
-                    Debug.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
-                    Debug.WriteLine("URL: {0}", client.BaseAddress);
-                return delivery;
+                    try
+                    {
+                        DeliveryData delivery = response.Content.ReadAsAsync<DeliveryData>().Result;
+                        Debug.WriteLine("Id:{0}\tName:{1}", delivery.price, delivery.time);
+                        Debug.WriteLine("URL: {0}", client.BaseAddress);
+                    }
+                    catch (Exception e)
+                    {
+                    }
+
                 }
                 else
                 {
