@@ -115,8 +115,7 @@ namespace PackagePlanner.Utilities
         public void SetPlannedPackage(Models.PlannedPackage plannedPackage)
         {
             var queryString = @"INSERT into [dbo].[PlannedPackage]" +
-                "(Id, " +
-                "CustomerId, " +
+                "(CustomerId, " +
                 "CargoTypeId, " +
                 "Price, " +
                 "DeliveryTime, " +
@@ -127,21 +126,19 @@ namespace PackagePlanner.Utilities
                 "PackageHight, " +
                 "PackageWidth, " +
                 "PackageLength)" +
-                "VALUES(@Id, " +
-                "CustomerId, " +
-                "CargoTypeId, " +
-                "Price, " +
-                "DeliveryTime, " +
-                "Discount, " +
-                "FromCityId, " +
-                "ToCityId, " +
-                "PriceCategoryId, " +
-                "PackageHight, " +
-                "PackageWidth, " +
-                "PackageLength)";
+                "VALUES(@CustomerId, " +
+                "@CargoTypeId, " +
+                "@Price, " +
+                "@DeliveryTime, " +
+                "@Discount, " +
+                "@FromCityId, " +
+                "@ToCityId, " +
+                "@PriceCategoryId, " +
+                "@PackageHight, " +
+                "@PackageWidth, " +
+                "@PackageLength)";
 
             SqlCommand cmd = new SqlCommand(queryString, _connection);
-            cmd.Parameters.Add("@Id", System.Data.SqlDbType.VarChar);
             cmd.Parameters.Add("@CustomerId", System.Data.SqlDbType.VarChar);
             cmd.Parameters.Add("@CargoTypeId", System.Data.SqlDbType.VarChar);
             cmd.Parameters.Add("@Price", System.Data.SqlDbType.Decimal);
@@ -153,13 +150,13 @@ namespace PackagePlanner.Utilities
             cmd.Parameters.Add("@PackageHight", System.Data.SqlDbType.Decimal);
             cmd.Parameters.Add("@PackageWidth", System.Data.SqlDbType.Decimal);
             cmd.Parameters.Add("@PackageLength", System.Data.SqlDbType.Decimal);
-            cmd.Parameters["@Id"].Value = plannedPackage.Id;
             cmd.Parameters["@CustomerId"].Value = plannedPackage.CustomerId;
             cmd.Parameters["@CargoTypeId"].Value = plannedPackage.CargoTypeId;
             cmd.Parameters["@Price"].Value = plannedPackage.Price;
             cmd.Parameters["@DeliveryTime"].Value = plannedPackage.DeliveryTime;
             cmd.Parameters["@Discount"].Value = plannedPackage.Discount;
             cmd.Parameters["@FromCityId"].Value = plannedPackage.FromCityId;
+            cmd.Parameters["@ToCityId"].Value = plannedPackage.ToCityId;
             cmd.Parameters["@PriceCategoryId"].Value = plannedPackage.PriceCategoryId;
             cmd.Parameters["@PackageHight"].Value = plannedPackage.PackageHight;
             cmd.Parameters["@PackageWidth"].Value = plannedPackage.PackageWidth;

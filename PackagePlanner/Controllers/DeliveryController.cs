@@ -21,7 +21,7 @@ namespace PackagePlanner.Controllers
                 packageWidth = packageWidth
             };
 
-            return Utilities.ShortestPathCalculator.ShortestPathFlight(apiRequestParams);
+            return Utilities.ShortestPathCalculator.ShortestPathFlight(apiRequestParams, null);
             
             
         }

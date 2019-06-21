@@ -4,7 +4,6 @@ namespace PackagePlanner.Models
 {
     public class PlannedPackage
     {
-        public string Id { get; set; }
         public string CustomerId { get; set; }
         public string CargoTypeId { get; set; }
         public double Price { get; set; }
@@ -19,7 +18,6 @@ namespace PackagePlanner.Models
 
         public PlannedPackage(DataRow row)
         {
-            Id = (string)row[0];
             CustomerId = (string)row[1];
             CargoTypeId = (string)row[2];
             Price = (double)row[3];

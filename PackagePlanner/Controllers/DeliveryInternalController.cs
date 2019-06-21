@@ -7,21 +7,25 @@ namespace PackagePlanner.Controllers
 {
     public class DeliveryInternalController : ApiController
     {
-        public Delivery Get(string fromDestination, string toDestination, int packageWeight, string cargoType, string recorded, int packageLength, int packageWidth, int packageHeight)
+        public Delivery Get(string fromDestination, string toDestination, int? packageWeight, string cargoType, int? packageLength, int? packageWidth, int? packageHeight, int? discount)
         {
+            if (!packageWeight.HasValue || !packageLength.HasValue || !packageHeight.HasValue || !packageWeight.HasValue)
+            {
+                return ReturnError();
+            }
             ApiRequestParams apiRequestParams = new ApiRequestParams()
             {
                 fromDestination = fromDestination,
                 toDestination = toDestination,
-                packageWeight = packageWeight,
+                packageWeight = packageWeight.Value,
                 cargoType = cargoType,
-                recorded = recorded,
-                packageHeight = packageHeight,
-                packageLength = packageLength,
-                packageWidth = packageWidth
+                recorded = "false",
+                packageHeight = packageHeight.Value,
+                packageLength = packageLength.Value,
+                packageWidth = packageWidth.Value
             };
 
-            DeliveryData deliv = Utilities.ShortestPathCalculator.ShortestPathFlight(apiRequestParams);
+            DeliveryData deliv = Utilities.ShortestPathCalculator.ShortestPathFlight(apiRequestParams, discount);
 
             var delivery = new Delivery()
             {
@@ -34,6 +38,11 @@ namespace PackagePlanner.Controllers
         }
 
         public Delivery Get()
+        {
+            return ReturnError();
+        }
+
+        private Delivery ReturnError()
         {
             DeliveryData deliv = new DeliveryData() { success = false };
             return new Delivery()

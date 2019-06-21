@@ -15,11 +15,11 @@ namespace PackagePlanner.Utilities
         {
             cities = Database.Instance.GetCity();
         }
-        public static Models.DeliveryData ShortestPathFlight(Models.ApiRequestParams apiRequestParams)
+        public static Models.DeliveryData ShortestPathFlight(Models.ApiRequestParams apiRequestParams, int? discount)
         {
             WeightCalculator wc = new WeightCalculator(apiRequestParams);
             List<string> path = Dijkstra.DijkstraAlgorithm(wc, cities, apiRequestParams.fromDestination, apiRequestParams.toDestination);
-            if (apiRequestParams.packageHeight > 200 || apiRequestParams.packageLength > 200 || apiRequestParams.packageWidth > 200 || apiRequestParams.packageWeight > 20 || apiRequestParams.recorded == "true" || path.Count == 0 || (apiRequestParams.cargoType != "refr" && apiRequestParams.cargoType != "weap" && apiRequestParams.cargoType != "std"))
+            if (apiRequestParams.packageHeight > 200 || apiRequestParams.packageLength > 200 || apiRequestParams.packageWidth > 200 || apiRequestParams.packageWeight > 20 || apiRequestParams.recorded == "true" || path == null || (apiRequestParams.cargoType != "refr" && apiRequestParams.cargoType != "weap" && apiRequestParams.cargoType != "std"))
             {
                 return new Models.DeliveryData()
                 {
@@ -28,6 +28,11 @@ namespace PackagePlanner.Utilities
             }
             int pricePerSegment = PriceTimeCalc.calcPrice(apiRequestParams.packageWidth, apiRequestParams.packageHeight, apiRequestParams.packageLength, apiRequestParams.packageWeight);
             int price = path.Count * pricePerSegment;
+            if (discount.HasValue)
+            {
+                price *= (100 - discount.Value);
+                price /= 100;
+            }
             var deliveryData = new Models.DeliveryData()
             {
                 price = price,

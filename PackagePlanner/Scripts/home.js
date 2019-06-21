@@ -1,9 +1,6 @@
 ﻿const list = document.getElementById("results-list");
 list.style.visibility = "hidden";
 
-const errorView = document.getElementById("error-view");
-errorView.style.display = 'none';
-
 const spinner = document.getElementById("spinner")
 spinner.style.visibility = 'hidden';
 
@@ -52,36 +49,13 @@ var convertArrayToString = function(array) {
     return text;
 }
 
-var fetchResults = function (completion) {
-    list.style.visibility = "hidden";
-    errorView.style.display = 'none';
-    isFetchingResults = true;
-    startSpinner();
-
+var getData = function () {
     const from = fromField.value;
     const to = toField.value;
     const weight = weightField.value;
     const customerId = customerIdInput.value;
 
-    const fastestTimeLabel = document.getElementById("fastest-time");
-    const fastestPriceLabel = document.getElementById("fastest-price");
-    const fastestRouteLabel = document.getElementById("fastest-route");
-    const bestTimeLabel = document.getElementById("best-time");
-    const bestPriceLabel = document.getElementById("best-price");
-    const bestRouteLabel = document.getElementById("best-route");
-    const cheapestTimeLabel = document.getElementById("cheapest-time");
-    const cheapestPriceLabel = document.getElementById("cheapest-price");
-    const cheapestRouteLabel = document.getElementById("cheapest-route");
-
-    if (customerId === "") {
-        errorView.innerHTML = "No customer id provided"
-        errorView.style.display = 'block';
-        stopSpinner();
-        isFetchingResults = false;
-        return;
-    }
-
-    var data = {
+    return {
         "fromDestination": from,
         "toDestination": to,
         "packageWeight": weight,
@@ -93,8 +67,24 @@ var fetchResults = function (completion) {
         "cargoType": typeField.value,
         "recorded": "false"
     };
+}
 
-    makeRequest('api/deliveryInternal', data, function (e) {
+var fetchResults = function (completion) {
+    list.style.visibility = "hidden";
+    isFetchingResults = true;
+    startSpinner();
+
+    const fastestTimeLabel = document.getElementById("fastest-time");
+    const fastestPriceLabel = document.getElementById("fastest-price");
+    const fastestRouteLabel = document.getElementById("fastest-route");
+    const bestTimeLabel = document.getElementById("best-time");
+    const bestPriceLabel = document.getElementById("best-price");
+    const bestRouteLabel = document.getElementById("best-route");
+    const cheapestTimeLabel = document.getElementById("cheapest-time");
+    const cheapestPriceLabel = document.getElementById("cheapest-price");
+    const cheapestRouteLabel = document.getElementById("cheapest-route");
+
+    makeRequest('api/deliveryInternal', getData(), function (e) {
         fastestTimeLabel.innerHTML = e.fastest.time;
         fastestPriceLabel.innerHTML = e.fastest.price;
         bestTimeLabel.innerHTML = e.best.time;
@@ -102,8 +92,8 @@ var fetchResults = function (completion) {
         cheapestTimeLabel.innerHTML = e.cheapest.time;
         cheapestPriceLabel.innerHTML = e.cheapest.price;
         var route = e.fastest.route;
-        route = [data.fromDestination].concat(route)
-        $("#error-view div").text();
+        route = [getData().fromDestination].concat(route)
+        $("#error-view p").text("");
 
         if (e.fastest.success) {
             if (e.fastest.route) {
@@ -124,7 +114,7 @@ var fetchResults = function (completion) {
 
         } else {
             list.style.visibility = "hidden";
-            $("#error-view div").text("No routes found");
+            $("#error-view p").text("No routes found");
         }
 
         stopSpinner();
@@ -147,53 +137,31 @@ discountInput.onkeypress = function(e) {
     e.preventDefault();
 }
 
-const selectBestButton = document.getElementById("select-best-button");
-selectBestButton.onclick = function (e) {
-    var data_select = {
-        CustomerID: customerIdInput.value,
-        type: typeField.value,
-        price: $('#best-price').text(),
-        discount : discountField.value
-    }
+function selectButtonClick() {
+    var data = getData();
+
+    data['price'] = $('#fastest-price').text();
+    data['time'] = $('#fastest-time').text();
 
 
     $.ajax({
         url: "/api/select",
-        data: data_select,
+        data: data,
         success: () => console.log("success")
     });
+}
+
+const selectBestButton = document.getElementById("select-best-button");
+selectBestButton.onclick = function (e) {
+    selectButtonClick();
 }
 
 const selectFastestButton = document.getElementById("select-fastest-button");
 selectFastestButton.onclick = function(e) {
-    var data_select = {
-        CustomerID: customerIdInput.value,
-        type: typeField.value,
-        price: $('#fastest-price').text(),
-        discount: discountField.value
-    }
-
-
-    $.ajax({
-        url: "/api/select",
-        data: data_select,
-        success: () => console.log("success")
-    });
+    selectButtonClick();
 }
 
 const selectCheapestButton = document.getElementById("select-cheapest-button");
 selectCheapestButton.onclick = function(e) {
-    var data_select = {
-        CustomerID: customerIdInput.value,
-        type: typeField.value,
-        price: $('#cheapest-price').text(),
-        discount: discountField.value
-    }
-
-
-    $.ajax({
-        url: "/api/select",
-        data: data_select,
-        success: () => console.log("success")
-    });
+    selectButtonClick();
 }
