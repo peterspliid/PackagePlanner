@@ -50,7 +50,12 @@ namespace PackagePlanner.Utilities
 
                 for (int i = 0; i < n; i++)
                 {
+                    if (cities[minNode].Id == "tanger" && cities[i].Id == "sahara")
+                    {
+                        Console.Write("as");
+                    }
                     Weight weight = weightCalculator.calc(cities[minNode].Id, cities[i].Id, type, onlyFlight);
+                    
                     int w = type == "time" ? weight.time : weight.price;
                     if (w > 0)
                     {

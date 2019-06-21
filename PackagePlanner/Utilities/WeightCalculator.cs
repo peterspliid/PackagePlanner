@@ -74,6 +74,15 @@ namespace PackagePlanner.Utilities
                             price = (int)delivery.price,
                             carrier = "tsl"
                         });
+                    } if (connectionsData.ContainsKey($"{from}-{to}") && connectionsData[$"{from}-{to}"].Type.Contains("eit"))
+                    {
+                        DeliveryData delivery = APIHandling.GetPriceFromEITcompanyAPI(parameters.UpdateAndFormatDictionary());
+                        cachedWeights[cacheString].Add(new Weight()
+                        {
+                            time = (int)delivery.time,
+                            price = (int)delivery.price,
+                            carrier = "eit"
+                        });
                     }
                 }
             }
@@ -83,7 +92,7 @@ namespace PackagePlanner.Utilities
             for (int i = 1; i < weights.Count; i++)
             {
                 int w = type == "price" ? weights[i].price : weights[i].time;
-                if (w < bestWeight)
+                if (w < bestWeight || bestWeight == 0)
                 {
                     bestWeight = w;
                     bestIndex = i;
